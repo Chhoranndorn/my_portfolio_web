@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'section_container.dart';
 import 'package:my_porfolio_web/util/images.dart';
-import 'package:my_porfolio_web/widgets/reveal.dart';
 
 class HeroSection extends StatelessWidget {
   final VoidCallback onContactTap;
@@ -83,9 +82,9 @@ class HeroSection extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Reveal(delay: const Duration(milliseconds: 100), offset: const Offset(0, 32), child: intro),
+                  intro,
                   const SizedBox(height: 24),
-                  Center(child: Reveal(delay: const Duration(milliseconds: 200), offset: const Offset(0, 24), child: avatar)),
+                  Center(child: avatar),
                 ],
               );
             }
@@ -94,9 +93,9 @@ class HeroSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(child: Reveal(delay: const Duration(milliseconds: 100), offset: const Offset(0, 32), child: intro)),
+                Expanded(child: intro),
                 const SizedBox(width: 24),
-                Reveal(delay: const Duration(milliseconds: 200), offset: const Offset(0, 24), child: avatar),
+                avatar,
               ],
             );
           },
@@ -105,3 +104,4 @@ class HeroSection extends StatelessWidget {
     );
   }
 }
+
