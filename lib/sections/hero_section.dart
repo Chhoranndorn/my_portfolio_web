@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'section_container.dart';
+import 'package:my_porfolio_web/util/images.dart';
 
 class HeroSection extends StatelessWidget {
   final VoidCallback onContactTap;
@@ -65,6 +66,8 @@ class HeroSection extends StatelessWidget {
             final avatar = CircleAvatar(
               radius: isNarrow ? 64 : 96,
               backgroundColor: theme.colorScheme.primary,
+              // Use app asset from Images helper; falls back to initials.
+              foregroundImage: const AssetImage(Images.profile),
               child: Text(
                 'YN',
                 style: TextStyle(
@@ -101,4 +104,3 @@ class HeroSection extends StatelessWidget {
     );
   }
 }
-

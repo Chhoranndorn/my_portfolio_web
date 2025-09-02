@@ -10,26 +10,54 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeMode _themeMode = ThemeMode.light;
+
+  void _toggleTheme() {
+    setState(() {
+      _themeMode = _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final light = ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo, brightness: Brightness.light),
+      useMaterial3: true,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+    );
+    final dark = ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo, brightness: Brightness.dark),
+      useMaterial3: true,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+    );
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'My Portfolio',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
-        useMaterial3: true,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+      theme: light,
+      darkTheme: dark,
+      themeMode: _themeMode,
+      home: PortfolioPage(
+        onToggleTheme: _toggleTheme,
+        themeMode: _themeMode,
       ),
-      home: const PortfolioPage(),
     );
   }
 }
 
 class PortfolioPage extends StatefulWidget {
-  const PortfolioPage({super.key});
+  final VoidCallback onToggleTheme;
+  final ThemeMode themeMode;
+
+  const PortfolioPage({super.key, required this.onToggleTheme, required this.themeMode});
 
   @override
   State<PortfolioPage> createState() => _PortfolioPageState();
@@ -92,7 +120,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
         return Scaffold(
           appBar: AppBar(
             title: const Text('My Portfolio'),
-            actions: isSmall ? null : _buildActions(false),
+            actions: [
+              if (!isSmall) ..._buildActions(false),
+              IconButton(
+                tooltip: widget.themeMode == ThemeMode.dark ? 'Switch to light mode' : 'Switch to dark mode',
+                icon: Icon(widget.themeMode == ThemeMode.dark ? Icons.dark_mode : Icons.light_mode),
+                onPressed: widget.onToggleTheme,
+              ),
+            ],
           ),
           drawer: isSmall
               ? Drawer(
@@ -149,7 +184,7 @@ class _Footer extends StatelessWidget {
           const Divider(height: 1),
           const SizedBox(height: 16),
           Text(
-            '© ${DateTime.now().year} Your Name · Built with Flutter',
+            '© ${DateTime.now().year} BO CHHORANNDORN · Built with Flutter',
             style: Theme.of(context).textTheme.bodySmall,
             textAlign: TextAlign.center,
           ),

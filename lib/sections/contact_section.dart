@@ -25,7 +25,7 @@ class _ContactSectionState extends State<ContactSection> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    const email = 'you@example.com';
+    const email = 'ranndorn99@gmail.com';
     return SectionContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
