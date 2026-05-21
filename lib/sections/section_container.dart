@@ -14,15 +14,15 @@ class SectionContainer extends StatelessWidget {
         : width < 1100
             ? 32.0
             : 64.0;
+    final vertical = width < 700 ? 48.0 : 72.0;
     return Container(
       color: background,
-      padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: 48),
+      padding: EdgeInsets.symmetric(horizontal: horizontal, vertical: vertical),
       alignment: Alignment.center,
       child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 1100),
+        constraints: const BoxConstraints(maxWidth: 1160),
         child: child,
       ),
     );
   }
 }
-

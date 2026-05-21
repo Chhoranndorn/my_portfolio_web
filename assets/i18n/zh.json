@@ -1,0 +1,134 @@
+{
+  "appTitle": "BO CHHORANNDORN",
+  "role": "全栈移动应用开发者",
+  "portfolioTitle": "BO CHHORANNDORN | Flutter Developer",
+  "navHome": "首页",
+  "navAbout": "关于",
+  "navSkills": "技能",
+  "navProjects": "项目",
+  "navContact": "联系",
+  "navigation": "导航",
+  "languageLabel": "语言",
+  "lightMode": "浅色模式",
+  "darkMode": "深色模式",
+  "changeAppearance": "切换作品集外观",
+  "switchToLightMode": "切换到浅色模式",
+  "switchToDarkMode": "切换到深色模式",
+  "heroBadge": "可承接 Flutter 和移动应用项目",
+  "heroIntro": "全栈移动应用开发者 | Flutter • React Native • Kotlin • Swift | Laravel Backend\n我使用清晰代码和可扩展架构构建跨平台与原生应用。\n热衷于创造实用的数字解决方案，并持续学习新技术。",
+  "addressLabel": "地址：",
+  "phoneLabel": "电话：",
+  "emailLabel": "邮箱：",
+  "address": "柬埔寨暹粒省 Salakansaeng 村",
+  "viewProjects": "查看项目",
+  "contactMe": "联系我",
+  "downloadCv": "下载简历",
+  "statApps": "Flutter 应用",
+  "statStores": "应用商店发布",
+  "statApi": "API 集成",
+  "aboutTitle": "工作经历",
+  "aboutSubtitle": "真实产品经验：构建、维护、发布并支持面向真实用户的移动应用。",
+  "skillsTitle": "技能",
+  "skillsSubtitle": "我用于构建、调试、发布和维护跨平台移动产品的技术。",
+  "projectsTitle": "项目",
+  "projectsSubtitle": "精选上线项目，包含应用商店发布、API 集成、身份验证和真实客户需求。",
+  "googlePlay": "Google Play",
+  "appStore": "App Store",
+  "contactTitle": "联系",
+  "contactSubtitle": "一起打造优秀的产品",
+  "copyEmail": "复制邮箱",
+  "copied": "已复制",
+  "location": "柬埔寨暹粒",
+  "spokenLanguages": "高棉语 / 英语",
+  "footer": "© {year} BO CHHORANNDORN · 使用 Flutter 构建",
+  "jobs": [
+    {
+      "role": "Flutter 开发者",
+      "duration": "2024 年 7 月至今",
+      "company": "Eocambo Technology (EOT) - 柬埔寨暹粒",
+      "responsibilities": [
+        "开发 10 多个 Flutter(Dart) 电商应用，并根据客户需求定制功能。",
+        "维护并优化旧应用，提升性能、稳定性和可扩展性。",
+        "使用 GetX 和 Provider 编写清晰、模块化的状态管理代码。",
+        "发布应用到 Play Store 和 App Store，并集成 Laravel 后端 RESTful API。",
+        "直接支持客户，解决技术问题、收集反馈并确保需求落地。"
+      ]
+    },
+    {
+      "role": "Flutter 开发实习生",
+      "duration": "2024 年 3 月 - 6 月",
+      "company": "Eocambo Technology (EOT) - 柬埔寨暹粒",
+      "responsibilities": [
+        "使用 GetX 和 Provider 开发并优化跨平台 Flutter 应用。",
+        "改进 UI/UX 和应用性能，并使用 Dio/http 集成 RESTful API。",
+        "参与代码评审、敏捷流程和 Git 版本控制。"
+      ]
+    },
+    {
+      "role": "客户服务",
+      "duration": "2023 年 7 月 - 2024 年 1 月",
+      "company": "Vireak Buntham 物流与旅行巴士服务",
+      "responsibilities": [
+        "提供专业客户支持并处理咨询。",
+        "协助客户处理预订和服务相关问题。",
+        "提升沟通能力和问题解决能力。"
+      ]
+    }
+  ],
+  "skills": {
+    "编程语言": ["Dart", "JavaScript"],
+    "框架与库": ["Flutter", "React Native"],
+    "数据库": ["MySQL", "Firebase"],
+    "部署与托管": ["Google Play Store", "Apple App Store", "Firebase"],
+    "工具": ["Git", "Postman", "Android Studio", "Xcode", "VS Code"],
+    "编程概念": ["OOP", "MVC", "Functional Programming", "REST API Design"],
+    "UX/UI": ["Figma"]
+  },
+  "projects": [
+    {
+      "title": "MVP Mobile",
+      "role": "维护者",
+      "type": "公司项目",
+      "techStack": "Flutter, REST API, Firebase",
+      "description": "一个 marketplace 移动应用，包含客户、商家和配送流程，用于买卖和实时履约。",
+      "highlights": [
+        "构建客户、商家和配送多角色体验。",
+        "实现 Firebase OTP 身份验证和 REST API 集成。",
+        "改进响应式 UI 和 Android/iOS 性能。"
+      ],
+      "imageKey": "mvp",
+      "googlePlayUrl": "https://play.google.com/store/apps/details?id=com.buyandsell.userapp&hl=en",
+      "appStoreUrl": "https://apps.apple.com/us/app/mvp-mobile/id6745422234"
+    },
+    {
+      "title": "NPN Auto Car 9999",
+      "role": "维护者",
+      "type": "公司项目",
+      "techStack": "Flutter, REST API, Firebase, Plasgate",
+      "description": "汽车经销平台，用于浏览车辆库存并连接客户与商家。",
+      "highlights": [
+        "维护客户、商家和配送模块。",
+        "使用 Firebase 和 Plasgate SMS 优化 OTP 验证。",
+        "修复线上问题并提升跨平台稳定性。"
+      ],
+      "imageKey": "npn",
+      "googlePlayUrl": "https://play.google.com/store/apps/details?id=com.npnautocar.userapp&hl=en",
+      "appStoreUrl": "https://apps.apple.com/us/app/npn-auto-car-9999/id6740723718"
+    },
+    {
+      "title": "MOL Shop",
+      "role": "维护者",
+      "type": "公司项目",
+      "techStack": "Flutter, REST API, Firebase, Provider",
+      "description": "零售电商 marketplace，专注于流畅浏览、账号验证和可靠购买流程。",
+      "highlights": [
+        "改进面向移动购物用户的 UI/UX 和响应式布局。",
+        "使用 Provider 实现可扩展状态管理。",
+        "增强错误处理，减少崩溃和边界情况失败。"
+      ],
+      "imageKey": "mol",
+      "googlePlayUrl": "https://play.google.com/store/apps/details?id=com.molshopcustomerapp.app&hl=en",
+      "appStoreUrl": "https://apps.apple.com/us/app/mol-shop/id6747336152"
+    }
+  ]
+}

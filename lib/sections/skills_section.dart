@@ -1,44 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:my_porfolio_web/l10n/app_strings.dart';
 import 'section_container.dart';
 import 'section_header.dart';
 
 class SkillsSection extends StatelessWidget {
-  const SkillsSection({super.key});
+  final AppStrings strings;
+
+  const SkillsSection({super.key, required this.strings});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    // Skills grouped by category like your CV
-    final skillsMap = {
-      'Programming Languages': ['Dart', 'JavaScript'],
-      'Frameworks & Libraries': ['Flutter', 'React Native'],
-      'Database': ['MySQL', 'Firebase'],
-      'Deployment & Hosting': [
-        'Google Play Store',
-        'Apple App Store',
-        'Firebase'
-      ],
-      'Tools': ['Git', 'Postman', 'Android Studio', 'Xcode', 'VS Code'],
-      'Programming Concepts': [
-        'OOP',
-        'MVC',
-        'Functional Programming',
-        'REST API Design'
-      ],
-      'UX/UI': ['Figma'],
-    };
+    final skillsMap = strings.skills;
 
     return SectionContainer(
-      background: theme.colorScheme.surfaceVariant.withOpacity(0.25),
+      background:
+          theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.35),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Align(
             alignment: Alignment.topLeft,
-            child: const SectionHeader(
-              title: 'Skills',
-              // subtitle: 'Tools and technologies I use often',
+            child: SectionHeader(
+              title: strings.skillsTitle,
+              subtitle: strings.skillsSubtitle,
             ),
           ),
 
@@ -60,10 +46,15 @@ class SkillsSection extends StatelessWidget {
                       ),
                     ),
                     ...entry.value.map((skill) => Chip(
+                          side: BorderSide(
+                            color: theme.colorScheme.outlineVariant,
+                          ),
+                          backgroundColor: theme.colorScheme.surface,
                           label: Text(skill),
-                          avatar: const Icon(
+                          avatar: Icon(
                             Icons.check_circle_outline,
                             size: 18,
+                            color: theme.colorScheme.primary,
                           ),
                         )),
                   ],

@@ -20,6 +20,7 @@ class Reveal extends StatefulWidget {
   State<Reveal> createState() => _RevealState();
 }
 
+
 class _RevealState extends State<Reveal> with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _opacity;
@@ -57,4 +58,3 @@ class _RevealState extends State<Reveal> with SingleTickerProviderStateMixin {
     );
   }
 }
-

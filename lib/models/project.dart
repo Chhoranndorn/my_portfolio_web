@@ -13,4 +13,3 @@ class Project {
     this.link,
   });
 }
-

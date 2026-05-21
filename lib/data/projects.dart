@@ -26,4 +26,3 @@ const projects = <Project>[
     link: null,
   ),
 ];
-

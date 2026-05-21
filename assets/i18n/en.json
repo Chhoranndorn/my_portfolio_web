@@ -1,0 +1,134 @@
+{
+  "appTitle": "BO CHHORANNDORN",
+  "role": "Full Stack Mobile Developer",
+  "portfolioTitle": "BO CHHORANNDORN | Flutter Developer",
+  "navHome": "Home",
+  "navAbout": "About",
+  "navSkills": "Skills",
+  "navProjects": "Projects",
+  "navContact": "Contact",
+  "navigation": "Navigation",
+  "languageLabel": "Language",
+  "lightMode": "Light mode",
+  "darkMode": "Dark mode",
+  "changeAppearance": "Change portfolio appearance",
+  "switchToLightMode": "Switch to light mode",
+  "switchToDarkMode": "Switch to dark mode",
+  "heroBadge": "Available for Flutter & mobile app projects",
+  "heroIntro": "Full-Stack Mobile Developer | Flutter • React Native • Kotlin • Swift | Laravel Backend\nI build cross-platform and native apps with clean code and scalable architecture.\nPassionate about creating practical digital solutions and learning new technologies.",
+  "addressLabel": "Address: ",
+  "phoneLabel": "Phone: ",
+  "emailLabel": "Email: ",
+  "address": "Salakansaeng Village, Siem Reap Province, Cambodia",
+  "viewProjects": "View Projects",
+  "contactMe": "Contact Me",
+  "downloadCv": "Download CV",
+  "statApps": "Flutter apps",
+  "statStores": "Stores shipped",
+  "statApi": "API integration",
+  "aboutTitle": "Work Experience",
+  "aboutSubtitle": "Hands-on production work building, maintaining, publishing, and supporting mobile apps for real users.",
+  "skillsTitle": "Skills",
+  "skillsSubtitle": "Technologies I use to build, debug, release, and maintain cross-platform mobile products.",
+  "projectsTitle": "Projects",
+  "projectsSubtitle": "Selected production apps with store releases, API integrations, authentication, and real client requirements.",
+  "googlePlay": "Google Play",
+  "appStore": "App Store",
+  "contactTitle": "Contact",
+  "contactSubtitle": "Let's build something great together",
+  "copyEmail": "Copy email",
+  "copied": "Copied",
+  "location": "Siem Reap, Cambodia",
+  "spokenLanguages": "Khmer / English",
+  "footer": "© {year} BO CHHORANNDORN · Built with Flutter",
+  "jobs": [
+    {
+      "role": "Flutter Developer",
+      "duration": "Jul 2024 - Present",
+      "company": "Eocambo Technology (EOT) - Siem Reap, Cambodia",
+      "responsibilities": [
+        "Developed 10+ Flutter (Dart) e-commerce apps, tailored to client requirements.",
+        "Maintained and optimized legacy apps for performance, stability, and scalability.",
+        "Implemented clean, modular code using GetX and Provider for state management.",
+        "Published apps to Play Store and App Store; integrated RESTful APIs with Laravel backends.",
+        "Supported clients directly, addressing technical issues, gathering feedback, and ensuring requirements were met."
+      ]
+    },
+    {
+      "role": "Flutter Developer Internship",
+      "duration": "Mar 2024 - Jun 2024",
+      "company": "Eocambo Technology (EOT) - Siem Reap, Cambodia",
+      "responsibilities": [
+        "Developed and optimized cross-platform Flutter apps with GetX and Provider for state management.",
+        "Improved UI/UX and app performance; integrated RESTful APIs using Dio/http.",
+        "Collaborated in code reviews, agile workflows, and Git version control."
+      ]
+    },
+    {
+      "role": "Customer Service",
+      "duration": "Jul 2023 - Jan 2024",
+      "company": "Vireak Buntham Logistics and Travel & Bus Service",
+      "responsibilities": [
+        "Provided professional customer support and handled inquiries.",
+        "Assisted customers with booking and service-related issues.",
+        "Developed strong communication and problem-solving skills."
+      ]
+    }
+  ],
+  "skills": {
+    "Programming Languages": ["Dart", "JavaScript"],
+    "Frameworks & Libraries": ["Flutter", "React Native"],
+    "Database": ["MySQL", "Firebase"],
+    "Deployment & Hosting": ["Google Play Store", "Apple App Store", "Firebase"],
+    "Tools": ["Git", "Postman", "Android Studio", "Xcode", "VS Code"],
+    "Programming Concepts": ["OOP", "MVC", "Functional Programming", "REST API Design"],
+    "UX/UI": ["Figma"]
+  },
+  "projects": [
+    {
+      "title": "MVP Mobile",
+      "role": "Maintainer",
+      "type": "Company Project",
+      "techStack": "Flutter, REST API, Firebase",
+      "description": "A marketplace mobile application with customer, vendor, and delivery flows for buying, selling, and real-time fulfillment.",
+      "highlights": [
+        "Built multi-role customer, vendor, and delivery experiences.",
+        "Implemented Firebase OTP authentication and REST API integration.",
+        "Improved responsive UI and Android/iOS performance."
+      ],
+      "imageKey": "mvp",
+      "googlePlayUrl": "https://play.google.com/store/apps/details?id=com.buyandsell.userapp&hl=en",
+      "appStoreUrl": "https://apps.apple.com/us/app/mvp-mobile/id6745422234"
+    },
+    {
+      "title": "NPN Auto Car 9999",
+      "role": "Maintainer",
+      "type": "Company Project",
+      "techStack": "Flutter, REST API, Firebase, Plasgate",
+      "description": "An automobile dealership platform for browsing vehicle inventory and connecting customers with vendors.",
+      "highlights": [
+        "Maintained customer, vendor, and delivery modules.",
+        "Optimized OTP verification with Firebase and Plasgate SMS.",
+        "Fixed production bugs and improved cross-platform stability."
+      ],
+      "imageKey": "npn",
+      "googlePlayUrl": "https://play.google.com/store/apps/details?id=com.npnautocar.userapp&hl=en",
+      "appStoreUrl": "https://apps.apple.com/us/app/npn-auto-car-9999/id6740723718"
+    },
+    {
+      "title": "MOL Shop",
+      "role": "Maintainer",
+      "type": "Company Project",
+      "techStack": "Flutter, REST API, Firebase, Provider",
+      "description": "A retail e-commerce marketplace focused on smooth browsing, account verification, and reliable purchasing flows.",
+      "highlights": [
+        "Improved UI/UX and responsive layouts for mobile shoppers.",
+        "Used Provider for scalable state management.",
+        "Enhanced error handling to reduce crashes and edge-case failures."
+      ],
+      "imageKey": "mol",
+      "googlePlayUrl": "https://play.google.com/store/apps/details?id=com.molshopcustomerapp.app&hl=en",
+      "appStoreUrl": "https://apps.apple.com/us/app/mol-shop/id6747336152"
+    }
+  ]
+}

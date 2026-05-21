@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_porfolio_web/l10n/app_strings.dart';
 import 'section_container.dart';
 import 'section_header.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ContactSection extends StatefulWidget {
-  const ContactSection({super.key});
+  final AppStrings strings;
+
+  const ContactSection({super.key, required this.strings});
 
   @override
   State<ContactSection> createState() => _ContactSectionState();
@@ -41,9 +44,9 @@ class _ContactSectionState extends State<ContactSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SectionHeader(
-            title: 'Contact',
-            subtitle: 'Let’s build something great together',
+          SectionHeader(
+            title: widget.strings.contactTitle,
+            subtitle: widget.strings.contactSubtitle,
           ),
           Wrap(
             spacing: 16,
@@ -55,7 +58,8 @@ class _ContactSectionState extends State<ContactSection> {
               FilledButton.tonalIcon(
                 onPressed: () => _copy(email),
                 icon: Icon(_copied ? Icons.check : Icons.copy),
-                label: Text(_copied ? 'Copied' : 'Copy email'),
+                label: Text(
+                    _copied ? widget.strings.copied : widget.strings.copyEmail),
               ),
             ],
           ),
@@ -65,22 +69,53 @@ class _ContactSectionState extends State<ContactSection> {
             spacing: 12,
             runSpacing: 12,
             children: [
-              _Social(icon: FontAwesomeIcons.github, label: 'GitHub', onTap: () => _open('https://github.com/Chhoranndorn')),
-              _Social(icon: FontAwesomeIcons.facebook, label: 'Facebook', onTap: () => _open('https://www.facebook.com/don.bx.1')),
-              _Social(icon: FontAwesomeIcons.youtube, label: 'YouTube', onTap: () => _open('https://www.youtube.com/@bochhoranndorn3266')),
-              _Social(icon: FontAwesomeIcons.tiktok, label: 'TikTok', onTap: () => _open('https://www.tiktok.com/@ranndorn?lang=en')),
-              _Social(icon: FontAwesomeIcons.linkedin, label: 'LinkedIn', onTap: () => _open('https://www.linkedin.com/in/bo-chhoranndorn-32402b35a/')),
-              _Social(icon: FontAwesomeIcons.instagram, label: 'Instagram', onTap: () => _open('https://www.instagram.com/rann_dxrn/')),
-              _Social(icon: FontAwesomeIcons.xTwitter, label: 'X', onTap: () => _open('https://x.com/ranndorn')),
-              _Social(icon: FontAwesomeIcons.telegram, label: 'Telegram', onTap: () => _open('https://t.me/rann_dxrn')),
+              _Social(
+                  icon: FontAwesomeIcons.github,
+                  label: 'GitHub',
+                  onTap: () => _open('https://github.com/Chhoranndorn')),
+              _Social(
+                  icon: FontAwesomeIcons.facebook,
+                  label: 'Facebook',
+                  onTap: () => _open('https://www.facebook.com/don.bx.1')),
+              _Social(
+                  icon: FontAwesomeIcons.youtube,
+                  label: 'YouTube',
+                  onTap: () =>
+                      _open('https://www.youtube.com/@bochhoranndorn3266')),
+              _Social(
+                  icon: FontAwesomeIcons.tiktok,
+                  label: 'TikTok',
+                  onTap: () =>
+                      _open('https://www.tiktok.com/@ranndorn?lang=en')),
+              _Social(
+                  icon: FontAwesomeIcons.linkedin,
+                  label: 'LinkedIn',
+                  onTap: () => _open(
+                      'https://www.linkedin.com/in/bo-chhoranndorn-32402b35a/')),
+              _Social(
+                  icon: FontAwesomeIcons.instagram,
+                  label: 'Instagram',
+                  onTap: () => _open('https://www.instagram.com/rann_dxrn/')),
+              _Social(
+                  icon: FontAwesomeIcons.xTwitter,
+                  label: 'X',
+                  onTap: () => _open('https://x.com/ranndorn')),
+              _Social(
+                  icon: FontAwesomeIcons.telegram,
+                  label: 'Telegram',
+                  onTap: () => _open('https://t.me/rann_dxrn')),
             ],
           ),
           const SizedBox(height: 16),
           Wrap(
             spacing: 16,
-            children: const [
-              _ContactBadge(icon: Icons.location_on_outlined, label: 'Remote / GMT+0'),
-              _ContactBadge(icon: Icons.language_outlined, label: 'English'),
+            children: [
+              _ContactBadge(
+                  icon: Icons.location_on_outlined,
+                  label: widget.strings.location),
+              _ContactBadge(
+                  icon: Icons.language_outlined,
+                  label: widget.strings.spokenLanguages),
             ],
           ),
         ],
@@ -121,7 +156,8 @@ class _Social extends StatelessWidget {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: theme.colorScheme.surfaceVariant.withOpacity(0.6),
+            color: theme.colorScheme.surfaceContainerHighest
+                .withValues(alpha: 0.6),
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: theme.colorScheme.outlineVariant),
           ),

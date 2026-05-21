@@ -1,83 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:my_porfolio_web/util/images.dart';
+import 'package:my_porfolio_web/l10n/app_strings.dart';
 import 'section_container.dart';
 import 'section_header.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Project {
-  final String title;
-  final String role;
-  final String type;
-  final String techStack;
-  final String description;
-  final String imageUrl;
-  final String googlePlayUrl;
-  final String appStoreUrl;
-
-  Project({
-    required this.title,
-    required this.role,
-    required this.type,
-    required this.techStack,
-    required this.description,
-    required this.imageUrl,
-    required this.googlePlayUrl,
-    required this.appStoreUrl,
-  });
-}
-
-final projects = [
-  Project(
-    title: 'MVP Mobile',
-    role: 'Maintainer',
-    type: 'Company Project',
-    techStack: 'Flutter, REST API, Firebase',
-    description:
-        'Developed a marketplace mobile application with three modules: Customer App, Vendor App, and Delivery App.\n'
-        'Implemented OTP authentication using Firebase for secure login and user verification.\n'
-        'Designed and integrated APIs to connect customers with vendors and manage real-time delivery tracking.\n'
-        'Built scalable architecture ensuring smooth performance across Android & iOS.\n'
-        'Delivered responsive and user-friendly interfaces for all user roles.',
-    imageUrl: Images.mvp,
-    googlePlayUrl:
-        'https://play.google.com/store/apps/details?id=com.buyandsell.userapp&hl=en',
-    appStoreUrl: 'https://apps.apple.com/us/app/mvp-mobile/id6745422234',
-  ),
-  Project(
-    title: 'NPN Auto Car 9999',
-    role: 'Maintainer',
-    type: 'Company Project',
-    techStack: 'Flutter, REST API, Firebase, Plasgate',
-    description:
-        'Maintained and improved an automobile dealership platform, supporting customer, vendor, and delivery modules.\n'
-        'Implemented and optimized OTP authentication using both Firebase and Plasgate SMS service for secure user verification.\n'
-        'Collaborated with backend developers to integrate APIs for inventory listings and vendor–customer communication.\n'
-        'Fixed bugs and optimized performance across Android and iOS, ensuring smooth cross-platform functionality.',
-    imageUrl: Images.npn,
-    googlePlayUrl:
-        'https://play.google.com/store/apps/details?id=com.npnautocar.userapp&hl=en',
-    appStoreUrl: 'https://apps.apple.com/us/app/npn-auto-car-9999/id6740723718',
-  ),
-  Project(
-    title: 'MOL Shop',
-    role: 'Maintainer',
-    type: 'Company Project',
-    techStack: 'Flutter, REST API, Firebase, Provider',
-    description:
-        'Improved UI/UX and responsive design for a retail e-commerce marketplace.\n'
-        'Used Provider state management for scalable architecture.\n'
-        'Integrated OTP authentication (Firebase/Plasgate) for secure login.\n'
-        'Enhanced error handling to prevent crashes and improve reliability.\n'
-        'Worked in Agile sprints, collaborating with the team to deliver features on time.',
-    imageUrl: Images.mol,
-    googlePlayUrl:
-        'https://play.google.com/store/apps/details?id=com.molshopcustomerapp.app&hl=en',
-    appStoreUrl: 'https://apps.apple.com/us/app/mol-shop/id6747336152',
-  ),
-];
-
 class ProjectsSection extends StatelessWidget {
-  const ProjectsSection({super.key});
+  final AppStrings strings;
+
+  const ProjectsSection({super.key, required this.strings});
 
   @override
   Widget build(BuildContext context) {
@@ -88,98 +18,229 @@ class ProjectsSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SectionHeader(
-            title: 'Projects',
-            subtitle: 'A few things I’ve built recently',
+          SectionHeader(
+            title: strings.projectsTitle,
+            subtitle: strings.projectsSubtitle,
           ),
           const SizedBox(height: 16),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: projects.map((project) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 24.0),
-                child: Card(
-                  elevation: 2,
-                  clipBehavior: Clip.antiAlias,
-                  child: InkWell(
-                    onTap: () {}, // optional preview
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
+            children: strings.projects
+                .map((project) =>
+                    _ProjectCard(project: project, strings: strings))
+                .toList(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ProjectCard extends StatefulWidget {
+  final LocalizedProject project;
+  final AppStrings strings;
+
+  const _ProjectCard({required this.project, required this.strings});
+
+  @override
+  State<_ProjectCard> createState() => _ProjectCardState();
+}
+
+class _ProjectCardState extends State<_ProjectCard> {
+  bool _hovering = false;
+
+  Future<void> _open(String url) async {
+    final uri = Uri.parse(url);
+    if (!await launchUrl(
+      uri,
+      mode: LaunchMode.platformDefault,
+      webOnlyWindowName: '_blank',
+    )) {
+      throw 'Could not launch $uri';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final project = widget.project;
+
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hovering = true),
+      onExit: (_) => setState(() => _hovering = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 180),
+        curve: Curves.easeOut,
+        margin: const EdgeInsets.only(bottom: 24),
+        transform: Matrix4.translationValues(0, _hovering ? -4 : 0, 0),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surface,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: _hovering
+                ? theme.colorScheme.primary.withValues(alpha: 0.42)
+                : theme.colorScheme.outlineVariant,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: theme.colorScheme.shadow.withValues(
+                alpha: _hovering ? 0.16 : 0.08,
+              ),
+              blurRadius: _hovering ? 24 : 12,
+              offset: Offset(0, _hovering ? 14 : 8),
+            ),
+          ],
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final isWide = constraints.maxWidth >= 820;
+            final image = _ProjectImage(path: project.imageUrl);
+            final details = Padding(
+              padding: const EdgeInsets.all(22),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      _Tag(project.type),
+                      _Tag(project.role),
+                    ],
+                  ),
+                  const SizedBox(height: 14),
+                  Text(
+                    project.title,
+                    style: theme.textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    project.description,
+                    style: theme.textTheme.bodyLarge?.copyWith(height: 1.5),
+                  ),
+                  const SizedBox(height: 14),
+                  Text(
+                    project.techStack,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.primary,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  ...project.highlights.map(
+                    (highlight) => Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // if (project.imageUrl.isNotEmpty)
-                          //   SizedBox(
-                          //     width: double.infinity,
-                          //     height: 180,
-                          //     child: Image.asset(
-                          //       project.imageUrl,
-                          //       fit: BoxFit.cover,
-                          //     ),
-                          //   ),
-                          if (project.imageUrl.isNotEmpty)
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.asset(
-                                project.imageUrl,
-                                width: double.infinity,
-                                fit: BoxFit
-                                    .fitWidth, // fit width, height adjusts automatically
+                          Icon(
+                            Icons.check_circle_outline,
+                            size: 18,
+                            color: theme.colorScheme.primary,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              highlight,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: theme.colorScheme.onSurfaceVariant,
+                                height: 1.45,
                               ),
                             ),
-
-                          const SizedBox(height: 12),
-                          Text(
-                            '${project.title} – ${project.role} (${project.type})',
-                            style: theme.textTheme.titleMedium
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'Tech Stack: ${project.techStack}',
-                            style: theme.textTheme.bodyMedium
-                                ?.copyWith(fontStyle: FontStyle.italic),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            project.description,
-                            style: theme.textTheme.bodyMedium,
-                          ),
-                          const SizedBox(height: 12),
-                          Row(
-                            children: [
-                              TextButton.icon(
-                                onPressed: () async {
-                                  final url = Uri.parse(project.googlePlayUrl);
-                                  if (!await launchUrl(url)) {
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                                icon: const Icon(Icons.android),
-                                label: const Text('Google Play'),
-                              ),
-                              const SizedBox(width: 12),
-                              TextButton.icon(
-                                onPressed: () async {
-                                  final url = Uri.parse(project.appStoreUrl);
-                                  if (!await launchUrl(url)) {
-                                    throw 'Could not launch $url';
-                                  }
-                                },
-                                icon: const Icon(Icons.apple),
-                                label: const Text('App Store'),
-                              ),
-                            ],
                           ),
                         ],
                       ),
                     ),
                   ),
-                ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 10,
+                    runSpacing: 10,
+                    children: [
+                      FilledButton.tonalIcon(
+                        onPressed: () => _open(project.googlePlayUrl),
+                        icon: const Icon(Icons.android),
+                        label: Text(widget.strings.googlePlay),
+                      ),
+                      OutlinedButton.icon(
+                        onPressed: () => _open(project.appStoreUrl),
+                        icon: const Icon(Icons.apple),
+                        label: Text(widget.strings.appStore),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+
+            if (!isWide) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [image, details],
               );
-            }).toList(),
-          ),
-        ],
+            }
+
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(width: 420, child: image),
+                Expanded(child: details),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _ProjectImage extends StatelessWidget {
+  final String path;
+
+  const _ProjectImage({required this.path});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return AspectRatio(
+      aspectRatio: 16 / 10,
+      child: Container(
+        color: theme.colorScheme.surfaceContainerHighest,
+        child: Image.asset(
+          path,
+          fit: BoxFit.contain,
+          alignment: Alignment.topCenter,
+        ),
+      ),
+    );
+  }
+}
+
+class _Tag extends StatelessWidget {
+  final String label;
+
+  const _Tag(this.label);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.primary.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Text(
+        label,
+        style: theme.textTheme.labelMedium?.copyWith(
+          color: theme.colorScheme.primary,
+          fontWeight: FontWeight.w700,
+        ),
       ),
     );
   }

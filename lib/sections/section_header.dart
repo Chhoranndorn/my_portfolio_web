@@ -16,10 +16,21 @@ class SectionHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold)),
+          Text(title,
+              style: theme.textTheme.headlineMedium
+                  ?.copyWith(fontWeight: FontWeight.bold)),
           if (subtitle != null) ...[
             const SizedBox(height: 8),
-            Text(subtitle!, style: theme.textTheme.bodyLarge?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 680),
+              child: Text(
+                subtitle!,
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  height: 1.5,
+                ),
+              ),
+            ),
           ],
           const SizedBox(height: 24),
         ],

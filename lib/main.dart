@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'l10n/app_strings.dart';
 import 'sections/hero_section.dart';
 import 'sections/about_section.dart';
 import 'sections/skills_section.dart';
 import 'sections/projects_section.dart';
 import 'sections/contact_section.dart';
+import 'util/images.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +20,30 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ThemeMode _themeMode = ThemeMode.light;
+  ThemeMode _themeMode = ThemeMode.dark;
+  AppLanguage _language = AppLanguage.en;
+  Map<AppLanguage, AppStrings> _translations = const {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTranslations();
+  }
+
+  Future<void> _loadTranslations() async {
+    final loaded = await Future.wait(
+      AppLanguage.values.map(
+        (language) async => MapEntry(
+          language,
+          await AppStrings.load(language),
+        ),
+      ),
+    );
+    if (!mounted) return;
+    setState(() {
+      _translations = Map.fromEntries(loaded);
+    });
+  }
 
   void _toggleTheme() {
     setState(() {
@@ -27,30 +52,66 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void _changeLanguage(AppLanguage language) {
+    setState(() {
+      _language = language;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final activeStrings = _translations[_language];
     final light = ThemeData(
       colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.indigo, brightness: Brightness.light),
       useMaterial3: true,
       visualDensity: VisualDensity.adaptivePlatformDensity,
+      scaffoldBackgroundColor: const Color(0xFFFAFAFC),
+      appBarTheme: const AppBarTheme(
+        centerTitle: false,
+        elevation: 0,
+        scrolledUnderElevation: 1,
+      ),
     );
     final dark = ThemeData(
       colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.indigo, brightness: Brightness.dark),
       useMaterial3: true,
       visualDensity: VisualDensity.adaptivePlatformDensity,
+      appBarTheme: const AppBarTheme(
+        centerTitle: false,
+        elevation: 0,
+        scrolledUnderElevation: 1,
+      ),
     );
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'My Portfolio',
+      title: activeStrings?.portfolioTitle ?? 'BO CHHORANNDORN',
       theme: light,
       darkTheme: dark,
       themeMode: _themeMode,
-      home: PortfolioPage(
-        onToggleTheme: _toggleTheme,
-        themeMode: _themeMode,
+      home: activeStrings == null
+          ? const _AppLoadingScreen()
+          : PortfolioPage(
+              onToggleTheme: _toggleTheme,
+              themeMode: _themeMode,
+              language: _language,
+              strings: activeStrings,
+              onLanguageChanged: _changeLanguage,
+            ),
+    );
+  }
+}
+
+class _AppLoadingScreen extends StatelessWidget {
+  const _AppLoadingScreen();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }
@@ -59,9 +120,18 @@ class _MyAppState extends State<MyApp> {
 class PortfolioPage extends StatefulWidget {
   final VoidCallback onToggleTheme;
   final ThemeMode themeMode;
+  final AppLanguage language;
+  final AppStrings strings;
+  final ValueChanged<AppLanguage> onLanguageChanged;
 
-  const PortfolioPage(
-      {super.key, required this.onToggleTheme, required this.themeMode});
+  const PortfolioPage({
+    super.key,
+    required this.onToggleTheme,
+    required this.themeMode,
+    required this.language,
+    required this.strings,
+    required this.onLanguageChanged,
+  });
 
   @override
   State<PortfolioPage> createState() => _PortfolioPageState();
@@ -87,13 +157,17 @@ class _PortfolioPageState extends State<PortfolioPage> {
     );
   }
 
+  AppStrings get strings => widget.strings;
+
   List<Widget> _buildActions(bool isSmall) {
+    final t = strings;
     final items = <_NavItem>[
-      _NavItem('Home', () => _scrollTo(_homeKey)),
-      _NavItem('About', () => _scrollTo(_aboutKey)),
-      _NavItem('Skills', () => _scrollTo(_skillsKey)),
-      _NavItem('Projects', () => _scrollTo(_projectsKey)),
-      _NavItem('Contact', () => _scrollTo(_contactKey)),
+      _NavItem(t.navHome, Icons.home_outlined, () => _scrollTo(_homeKey)),
+      _NavItem(t.navAbout, Icons.badge_outlined, () => _scrollTo(_aboutKey)),
+      _NavItem(t.navSkills, Icons.tune_outlined, () => _scrollTo(_skillsKey)),
+      _NavItem(
+          t.navProjects, Icons.work_outline, () => _scrollTo(_projectsKey)),
+      _NavItem(t.navContact, Icons.mail_outline, () => _scrollTo(_contactKey)),
     ];
 
     if (isSmall) {
@@ -116,43 +190,194 @@ class _PortfolioPageState extends State<PortfolioPage> {
         .toList();
   }
 
+  Widget _buildMobileDrawer() {
+    final theme = Theme.of(context);
+    final t = strings;
+    final navItems = <_NavItem>[
+      _NavItem(t.navHome, Icons.home_outlined, () => _scrollTo(_homeKey)),
+      _NavItem(t.navAbout, Icons.badge_outlined, () => _scrollTo(_aboutKey)),
+      _NavItem(t.navSkills, Icons.tune_outlined, () => _scrollTo(_skillsKey)),
+      _NavItem(
+          t.navProjects, Icons.work_outline, () => _scrollTo(_projectsKey)),
+      _NavItem(t.navContact, Icons.mail_outline, () => _scrollTo(_contactKey)),
+    ];
+
+    void openSection(_NavItem item) {
+      Navigator.of(context).pop();
+      item.onTap();
+    }
+
+    return Drawer(
+      width: 320,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero,
+      ),
+      child: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(18),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: theme.colorScheme.outlineVariant),
+                ),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 28,
+                      backgroundColor: theme.colorScheme.primary,
+                      foregroundImage: const AssetImage(Images.profile),
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'BO CHHORANNDORN',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.w800,
+                              color: theme.colorScheme.onPrimaryContainer,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            t.role,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: theme.colorScheme.onPrimaryContainer
+                                  .withValues(alpha: 0.74),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 14, 12, 8),
+                    child: Text(
+                      t.navigation,
+                      style: theme.textTheme.labelLarge?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  ...navItems.map(
+                    (item) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: ListTile(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        leading: Icon(item.icon),
+                        title: Text(item.label),
+                        trailing: const Icon(Icons.chevron_right, size: 18),
+                        onTap: () => openSection(item),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12, 14, 12, 8),
+                    child: Text(
+                      t.languageLabel,
+                      style: theme.textTheme.labelLarge?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  ...AppLanguage.values.map(
+                    (language) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: RadioListTile<AppLanguage>(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        value: language,
+                        groupValue: widget.language,
+                        title: Text(language.label),
+                        secondary: _FlagBadge(language: language),
+                        onChanged: (value) {
+                          if (value == null) return;
+                          widget.onLanguageChanged(value);
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Divider(height: 1),
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                leading: Icon(widget.themeMode == ThemeMode.dark
+                    ? Icons.light_mode
+                    : Icons.dark_mode),
+                title: Text(widget.themeMode == ThemeMode.dark
+                    ? t.lightMode
+                    : t.darkMode),
+                subtitle: Text(t.changeAppearance),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  widget.onToggleTheme();
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final isSmall = constraints.maxWidth < 900;
+        final t = strings;
         return Scaffold(
           appBar: AppBar(
-            title: const Text('My Portfolio'),
+            title: Text(t.appTitle),
             actions: [
               if (!isSmall) ..._buildActions(false),
+              if (!isSmall)
+                _LanguageMenu(
+                  selected: widget.language,
+                  onChanged: widget.onLanguageChanged,
+                  tooltip: t.languageLabel,
+                ),
               IconButton(
                 tooltip: widget.themeMode == ThemeMode.dark
-                    ? 'Switch to light mode'
-                    : 'Switch to dark mode',
+                    ? t.switchToLightMode
+                    : t.switchToDarkMode,
                 icon: Icon(widget.themeMode == ThemeMode.dark
-                    ? Icons.dark_mode
-                    : Icons.light_mode),
+                    ? Icons.light_mode
+                    : Icons.dark_mode),
                 onPressed: widget.onToggleTheme,
               ),
             ],
           ),
-          drawer: isSmall
-              ? Drawer(
-                  child: ListView(
-                    padding: const EdgeInsets.symmetric(vertical: 24),
-                    children: [
-                      const ListTile(
-                        title: Text(
-                          'Navigate',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      ..._buildActions(true),
-                    ],
-                  ),
-                )
-              : null,
+          drawer: isSmall ? _buildMobileDrawer() : null,
           body: SingleChildScrollView(
             controller: _scrollController,
             child: Column(
@@ -161,14 +386,16 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 Container(
                     key: _homeKey,
                     child: HeroSection(
+                        strings: t,
                         onContactTap: () => _scrollTo(_contactKey),
                         onProjectsTap: () => _scrollTo(_projectsKey))),
-                Container(key: _aboutKey, child: const AboutSection()),
-                Container(key: _skillsKey, child: const SkillsSection()),
-                Container(key: _projectsKey, child: const ProjectsSection()),
-                Container(key: _contactKey, child: const ContactSection()),
+                Container(key: _aboutKey, child: AboutSection(strings: t)),
+                Container(key: _skillsKey, child: SkillsSection(strings: t)),
+                Container(
+                    key: _projectsKey, child: ProjectsSection(strings: t)),
+                Container(key: _contactKey, child: ContactSection(strings: t)),
                 const SizedBox(height: 24),
-                const _Footer(),
+                _Footer(strings: t),
               ],
             ),
           ),
@@ -180,12 +407,113 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
 class _NavItem {
   final String label;
+  final IconData icon;
   final VoidCallback onTap;
-  _NavItem(this.label, this.onTap);
+  _NavItem(this.label, this.icon, this.onTap);
+}
+
+class _LanguageMenu extends StatelessWidget {
+  final AppLanguage selected;
+  final ValueChanged<AppLanguage> onChanged;
+  final String tooltip;
+
+  const _LanguageMenu({
+    required this.selected,
+    required this.onChanged,
+    required this.tooltip,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return PopupMenuButton<AppLanguage>(
+      tooltip: tooltip,
+      initialValue: selected,
+      onSelected: onChanged,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: theme.colorScheme.outlineVariant),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _FlagBadge(language: selected, size: 24),
+              const SizedBox(width: 8),
+              Text(
+                selected.shortLabel,
+                style: theme.textTheme.labelLarge?.copyWith(
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      itemBuilder: (context) {
+        return AppLanguage.values
+            .map(
+              (language) => PopupMenuItem(
+                value: language,
+                child: Row(
+                  children: [
+                    _FlagBadge(language: language, size: 24),
+                    const SizedBox(width: 10),
+                    Expanded(child: Text(language.label)),
+                    if (selected == language)
+                      Icon(
+                        Icons.check,
+                        size: 18,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                  ],
+                ),
+              ),
+            )
+            .toList();
+      },
+    );
+  }
+}
+
+class _FlagBadge extends StatelessWidget {
+  final AppLanguage language;
+  final double size;
+
+  const _FlagBadge({required this.language, this.size = 28});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Container(
+      width: size + 6,
+      height: size,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: theme.colorScheme.outlineVariant),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Image.asset(
+        language.flagAsset,
+        width: size + 6,
+        height: size,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
 }
 
 class _Footer extends StatelessWidget {
-  const _Footer();
+  final AppStrings strings;
+
+  const _Footer({required this.strings});
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +524,7 @@ class _Footer extends StatelessWidget {
           const Divider(height: 1),
           const SizedBox(height: 16),
           Text(
-            '© ${DateTime.now().year} BO CHHORANNDORN · Built with Flutter',
+            strings.footer(DateTime.now().year),
             style: Theme.of(context).textTheme.bodySmall,
             textAlign: TextAlign.center,
           ),

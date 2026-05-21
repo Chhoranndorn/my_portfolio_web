@@ -1,0 +1,134 @@
+{
+  "appTitle": "BO CHHORANNDORN",
+  "role": "អ្នកអភិវឌ្ឍន៍កម្មវិធីទូរស័ព្ទ Full Stack",
+  "portfolioTitle": "BO CHHORANNDORN | Flutter Developer",
+  "navHome": "ទំព័រដើម",
+  "navAbout": "អំពីខ្ញុំ",
+  "navSkills": "ជំនាញ",
+  "navProjects": "គម្រោង",
+  "navContact": "ទំនាក់ទំនង",
+  "navigation": "ការរុករក",
+  "languageLabel": "ភាសា",
+  "lightMode": "ពន្លឺ",
+  "darkMode": "ងងឹត",
+  "changeAppearance": "ប្ដូររូបរាងគេហទំព័រ",
+  "switchToLightMode": "ប្ដូរទៅពន្លឺ",
+  "switchToDarkMode": "ប្ដូរទៅងងឹត",
+  "heroBadge": "រួចរាល់សម្រាប់គម្រោង Flutter និងកម្មវិធីទូរស័ព្ទ",
+  "heroIntro": "អ្នកអភិវឌ្ឍន៍កម្មវិធីទូរស័ព្ទ Full-Stack | Flutter • React Native • Kotlin • Swift | Laravel Backend\nខ្ញុំបង្កើតកម្មវិធី cross-platform និង native apps ជាមួយកូដស្អាត និង architecture ដែលអាចពង្រីកបាន។\nខ្ញុំមានចំណង់ចំណូលចិត្តក្នុងការបង្កើតដំណោះស្រាយឌីជីថលដែលអាចប្រើប្រាស់បានជាក់ស្តែង និងរៀនបច្ចេកវិទ្យាថ្មីៗ។",
+  "addressLabel": "អាសយដ្ឋាន៖ ",
+  "phoneLabel": "ទូរស័ព្ទ៖ ",
+  "emailLabel": "អ៊ីមែល៖ ",
+  "address": "ភូមិសាលាកន្សែង ខេត្តសៀមរាប ប្រទេសកម្ពុជា",
+  "viewProjects": "មើលគម្រោង",
+  "contactMe": "ទាក់ទងខ្ញុំ",
+  "downloadCv": "ទាញយក CV",
+  "statApps": "កម្មវិធី Flutter",
+  "statStores": "ចេញផ្សាយលើ Store",
+  "statApi": "ភ្ជាប់ API",
+  "aboutTitle": "បទពិសោធន៍ការងារ",
+  "aboutSubtitle": "បទពិសោធន៍ជាក់ស្តែងក្នុងការបង្កើត ថែទាំ បោះផ្សាយ និងគាំទ្រកម្មវិធីទូរស័ព្ទសម្រាប់អ្នកប្រើប្រាស់ពិត។",
+  "skillsTitle": "ជំនាញ",
+  "skillsSubtitle": "បច្ចេកវិទ្យាដែលខ្ញុំប្រើសម្រាប់បង្កើត debug បោះផ្សាយ និងថែទាំផលិតផល mobile cross-platform។",
+  "projectsTitle": "គម្រោង",
+  "projectsSubtitle": "កម្មវិធី production ដែលបានជ្រើសរើស មានការចេញផ្សាយលើ store ការភ្ជាប់ API authentication និងតម្រូវការអតិថិជនពិត។",
+  "googlePlay": "Google Play",
+  "appStore": "App Store",
+  "contactTitle": "ទំនាក់ទំនង",
+  "contactSubtitle": "តោះបង្កើតអ្វីមួយដែលល្អជាមួយគ្នា",
+  "copyEmail": "ចម្លងអ៊ីមែល",
+  "copied": "បានចម្លង",
+  "location": "សៀមរាប កម្ពុជា",
+  "spokenLanguages": "ខ្មែរ / អង់គ្លេស",
+  "footer": "© {year} BO CHHORANNDORN · បង្កើតដោយ Flutter",
+  "jobs": [
+    {
+      "role": "អ្នកអភិវឌ្ឍន៍ Flutter",
+      "duration": "កក្កដា 2024 - បច្ចុប្បន្ន",
+      "company": "Eocambo Technology (EOT) - សៀមរាប កម្ពុជា",
+      "responsibilities": [
+        "អភិវឌ្ឍកម្មវិធី e-commerce Flutter (Dart) ជាង 10 តាមតម្រូវការអតិថិជន។",
+        "ថែទាំ និងកែលម្អកម្មវិធីចាស់ៗ ដើម្បីបង្កើនល្បឿន ស្ថេរភាព និងសមត្ថភាពពង្រីក។",
+        "សរសេរកូដស្អាត និងបែងចែកជាម៉ូឌុល ដោយប្រើ GetX និង Provider សម្រាប់គ្រប់គ្រង state។",
+        "បោះផ្សាយកម្មវិធីទៅ Play Store និង App Store ហើយភ្ជាប់ RESTful API ជាមួយ Laravel backend។",
+        "គាំទ្រអតិថិជនដោយផ្ទាល់ ដោះស្រាយបញ្ហាបច្ចេកទេស ប្រមូលមតិយោបល់ និងធានាថាតម្រូវការត្រូវបានបំពេញ។"
+      ]
+    },
+    {
+      "role": "ហាត់ការ Flutter Developer",
+      "duration": "មីនា 2024 - មិថុនា 2024",
+      "company": "Eocambo Technology (EOT) - សៀមរាប កម្ពុជា",
+      "responsibilities": [
+        "អភិវឌ្ឍ និងកែលម្អកម្មវិធី Flutter cross-platform ដោយប្រើ GetX និង Provider។",
+        "កែលម្អ UI/UX និង performance របស់កម្មវិធី ហើយភ្ជាប់ RESTful API ដោយប្រើ Dio/http។",
+        "ចូលរួម code review, agile workflow និង Git version control។"
+      ]
+    },
+    {
+      "role": "សេវាកម្មអតិថិជន",
+      "duration": "កក្កដា 2023 - មករា 2024",
+      "company": "Vireak Buntham Logistics and Travel & Bus Service",
+      "responsibilities": [
+        "ផ្តល់សេវាគាំទ្រអតិថិជនយ៉ាងមានវិជ្ជាជីវៈ និងឆ្លើយសំណួរ។",
+        "ជួយអតិថិជនក្នុងការកក់ និងបញ្ហាដែលទាក់ទងនឹងសេវាកម្ម។",
+        "អភិវឌ្ឍជំនាញទំនាក់ទំនង និងដោះស្រាយបញ្ហាបានល្អ។"
+      ]
+    }
+  ],
+  "skills": {
+    "ភាសាកម្មវិធី": ["Dart", "JavaScript"],
+    "Framework និង Library": ["Flutter", "React Native"],
+    "មូលដ្ឋានទិន្នន័យ": ["MySQL", "Firebase"],
+    "បោះផ្សាយ និង Hosting": ["Google Play Store", "Apple App Store", "Firebase"],
+    "ឧបករណ៍": ["Git", "Postman", "Android Studio", "Xcode", "VS Code"],
+    "គោលការណ៍សរសេរកម្មវិធី": ["OOP", "MVC", "Functional Programming", "REST API Design"],
+    "UX/UI": ["Figma"]
+  },
+  "projects": [
+    {
+      "title": "MVP Mobile",
+      "role": "អ្នកថែទាំ",
+      "type": "គម្រោងក្រុមហ៊ុន",
+      "techStack": "Flutter, REST API, Firebase",
+      "description": "កម្មវិធី marketplace សម្រាប់ទិញ លក់ និងដឹកជញ្ជូន ជាមួយ flow សម្រាប់អតិថិជន អ្នកលក់ និងអ្នកដឹក។",
+      "highlights": [
+        "បង្កើតបទពិសោធន៍សម្រាប់តួនាទីអតិថិជន អ្នកលក់ និងអ្នកដឹក។",
+        "អនុវត្ត Firebase OTP authentication និងការភ្ជាប់ REST API។",
+        "កែលម្អ UI responsive និង performance លើ Android/iOS។"
+      ],
+      "imageKey": "mvp",
+      "googlePlayUrl": "https://play.google.com/store/apps/details?id=com.buyandsell.userapp&hl=en",
+      "appStoreUrl": "https://apps.apple.com/us/app/mvp-mobile/id6745422234"
+    },
+    {
+      "title": "NPN Auto Car 9999",
+      "role": "អ្នកថែទាំ",
+      "type": "គម្រោងក្រុមហ៊ុន",
+      "techStack": "Flutter, REST API, Firebase, Plasgate",
+      "description": "Platform លក់រថយន្ត សម្រាប់មើលបញ្ជីរថយន្ត និងភ្ជាប់អតិថិជនជាមួយអ្នកលក់។",
+      "highlights": [
+        "ថែទាំម៉ូឌុលអតិថិជន អ្នកលក់ និងអ្នកដឹក។",
+        "កែលម្អ OTP verification ដោយប្រើ Firebase និង Plasgate SMS។",
+        "ដោះស្រាយ bug ក្នុង production និងកែលម្អស្ថេរភាព cross-platform។"
+      ],
+      "imageKey": "npn",
+      "googlePlayUrl": "https://play.google.com/store/apps/details?id=com.npnautocar.userapp&hl=en",
+      "appStoreUrl": "https://apps.apple.com/us/app/npn-auto-car-9999/id6740723718"
+    },
+    {
+      "title": "MOL Shop",
+      "role": "អ្នកថែទាំ",
+      "type": "គម្រោងក្រុមហ៊ុន",
+      "techStack": "Flutter, REST API, Firebase, Provider",
+      "description": "Marketplace e-commerce សម្រាប់ retail ដែលផ្តោតលើការរុករកងាយស្រួល ការផ្ទៀងផ្ទាត់គណនី និង flow ទិញដែលទុកចិត្តបាន។",
+      "highlights": [
+        "កែលម្អ UI/UX និង layout responsive សម្រាប់អ្នកទិញតាមទូរស័ព្ទ។",
+        "ប្រើ Provider សម្រាប់ state management ដែលអាចពង្រីកបាន។",
+        "កែលម្អ error handling ដើម្បីកាត់បន្ថយ crash និងបញ្ហាករណីពិសេស។"
+      ],
+      "imageKey": "mol",
+      "googlePlayUrl": "https://play.google.com/store/apps/details?id=com.molshopcustomerapp.app&hl=en",
+      "appStoreUrl": "https://apps.apple.com/us/app/mol-shop/id6747336152"
+    }
+  ]
+}
