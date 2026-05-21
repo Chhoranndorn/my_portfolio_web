@@ -22,19 +22,22 @@ class _MyAppState extends State<MyApp> {
 
   void _toggleTheme() {
     setState(() {
-      _themeMode = _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+      _themeMode =
+          _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final light = ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo, brightness: Brightness.light),
+      colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.indigo, brightness: Brightness.light),
       useMaterial3: true,
       visualDensity: VisualDensity.adaptivePlatformDensity,
     );
     final dark = ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo, brightness: Brightness.dark),
+      colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.indigo, brightness: Brightness.dark),
       useMaterial3: true,
       visualDensity: VisualDensity.adaptivePlatformDensity,
     );
@@ -57,7 +60,8 @@ class PortfolioPage extends StatefulWidget {
   final VoidCallback onToggleTheme;
   final ThemeMode themeMode;
 
-  const PortfolioPage({super.key, required this.onToggleTheme, required this.themeMode});
+  const PortfolioPage(
+      {super.key, required this.onToggleTheme, required this.themeMode});
 
   @override
   State<PortfolioPage> createState() => _PortfolioPageState();
@@ -123,8 +127,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
             actions: [
               if (!isSmall) ..._buildActions(false),
               IconButton(
-                tooltip: widget.themeMode == ThemeMode.dark ? 'Switch to light mode' : 'Switch to dark mode',
-                icon: Icon(widget.themeMode == ThemeMode.dark ? Icons.dark_mode : Icons.light_mode),
+                tooltip: widget.themeMode == ThemeMode.dark
+                    ? 'Switch to light mode'
+                    : 'Switch to dark mode',
+                icon: Icon(widget.themeMode == ThemeMode.dark
+                    ? Icons.dark_mode
+                    : Icons.light_mode),
                 onPressed: widget.onToggleTheme,
               ),
             ],
@@ -150,7 +158,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(key: _homeKey, child: HeroSection(onContactTap: () => _scrollTo(_contactKey), onProjectsTap: () => _scrollTo(_projectsKey))),
+                Container(
+                    key: _homeKey,
+                    child: HeroSection(
+                        onContactTap: () => _scrollTo(_contactKey),
+                        onProjectsTap: () => _scrollTo(_projectsKey))),
                 Container(key: _aboutKey, child: const AboutSection()),
                 Container(key: _skillsKey, child: const SkillsSection()),
                 Container(key: _projectsKey, child: const ProjectsSection()),

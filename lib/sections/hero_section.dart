@@ -37,6 +37,19 @@ class HeroSection extends StatelessWidget {
               color: theme.colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.w500,
             );
+            final contactStyle = theme.textTheme.bodyLarge?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                ) ??
+                TextStyle(
+                  fontSize: 16,
+                  color: theme.colorScheme.onSurface,
+                );
+            final contactLabelStyle = contactStyle.copyWith(
+              fontWeight: FontWeight.bold,
+            );
+            final linkStyle = contactStyle.copyWith(
+              color: theme.colorScheme.primary,
+            );
             final intro = Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -44,8 +57,9 @@ class HeroSection extends StatelessWidget {
                 Text('BO CHHORANNDORN', style: nameStyle),
                 const SizedBox(height: 8),
                 // Role
-                Text('Mobile Application Developer (Flutter)',
-                    style: titleStyle),
+                // Text('Mobile Application Developer', style: titleStyle),
+                Text('Full Stack Mobile Developer', style: titleStyle),
+
                 const SizedBox(height: 16),
 
                 // Contact Info - each on a new line
@@ -55,11 +69,11 @@ class HeroSection extends StatelessWidget {
                   children: [
                     RichText(
                       text: TextSpan(
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        style: contactStyle,
                         children: [
                           TextSpan(
                             text: 'Address: ',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: contactLabelStyle,
                           ),
                           TextSpan(
                               text:
@@ -70,11 +84,11 @@ class HeroSection extends StatelessWidget {
                     SizedBox(height: 4),
                     RichText(
                       text: TextSpan(
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        style: contactStyle,
                         children: [
                           TextSpan(
                             text: 'Phone: ',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: contactLabelStyle,
                           ),
                           TextSpan(text: '+855 17 824 303 (Telegram)'),
                         ],
@@ -83,11 +97,11 @@ class HeroSection extends StatelessWidget {
                     SizedBox(height: 4),
                     RichText(
                       text: TextSpan(
-                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        style: contactStyle,
                         children: [
                           TextSpan(
                             text: 'Email: ',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: contactLabelStyle,
                           ),
                           TextSpan(text: 'ranndorn99@gmail.com'),
                         ],
@@ -104,14 +118,12 @@ class HeroSection extends StatelessWidget {
                         }
                       },
                       child: RichText(
-                        text: const TextSpan(
-                          style: TextStyle(fontSize: 16, color: Colors.blue),
+                        text: TextSpan(
+                          style: linkStyle,
                           children: [
                             TextSpan(
                               text: 'LinkedIn: ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                              style: contactLabelStyle,
                             ),
                             TextSpan(
                               text:
@@ -134,14 +146,12 @@ class HeroSection extends StatelessWidget {
                         }
                       },
                       child: RichText(
-                        text: const TextSpan(
-                          style: TextStyle(fontSize: 16, color: Colors.blue),
+                        text: TextSpan(
+                          style: linkStyle,
                           children: [
                             TextSpan(
                               text: 'GitHub: ',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                              style: contactLabelStyle,
                             ),
                             TextSpan(
                               text: 'github.com/Chhoranndorn',

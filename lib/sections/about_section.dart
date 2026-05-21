@@ -62,7 +62,7 @@ class AboutSection extends StatelessWidget {
               duration: 'Jul 2024 - Present',
               company: 'Eocambo Technology (EOT) – Siem Reap, Cambodia',
               responsibilities: [
-                'Developed 5+ Flutter (Dart) e-commerce apps, tailored to client requirements.',
+                'Developed 10+ Flutter (Dart) e-commerce apps, tailored to client requirements.',
                 'Maintained and optimized legacy apps for performance, stability, and scalability.',
                 'Implemented clean, modular code using GetX and Provider for state management.',
                 'Collaborated with UI/UX teams to convert designs into functional apps.',
