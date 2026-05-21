@@ -70,6 +70,12 @@ class AppStrings {
   String get skillsSubtitle => _text('skillsSubtitle');
   String get projectsTitle => _text('projectsTitle');
   String get projectsSubtitle => _text('projectsSubtitle');
+  String get projectDetails => _text('projectDetails');
+  String get overview => _text('overview');
+  String get highlights => _text('highlights');
+  String get techStackLabel => _text('techStackLabel');
+  String get viewDetails => _text('viewDetails');
+  String get close => _text('close');
   String get googlePlay => _text('googlePlay');
   String get appStore => _text('appStore');
   String get contactTitle => _text('contactTitle');

@@ -7,6 +7,7 @@ import 'sections/skills_section.dart';
 import 'sections/projects_section.dart';
 import 'sections/contact_section.dart';
 import 'util/images.dart';
+import 'util/local_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,6 +21,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  static const _themePreferenceKey = 'portfolio.theme';
+  static const _languagePreferenceKey = 'portfolio.language';
+
   ThemeMode _themeMode = ThemeMode.dark;
   AppLanguage _language = AppLanguage.en;
   Map<AppLanguage, AppStrings> _translations = const {};
@@ -27,10 +31,12 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _loadTranslations();
+    _loadAppState();
   }
 
-  Future<void> _loadTranslations() async {
+  Future<void> _loadAppState() async {
+    final savedTheme = await LocalPreferences.read(_themePreferenceKey);
+    final savedLanguage = await LocalPreferences.read(_languagePreferenceKey);
     final loaded = await Future.wait(
       AppLanguage.values.map(
         (language) async => MapEntry(
@@ -41,21 +47,32 @@ class _MyAppState extends State<MyApp> {
     );
     if (!mounted) return;
     setState(() {
+      _themeMode = savedTheme == 'light' ? ThemeMode.light : ThemeMode.dark;
+      _language = AppLanguage.values.firstWhere(
+        (language) => language.name == savedLanguage,
+        orElse: () => AppLanguage.en,
+      );
       _translations = Map.fromEntries(loaded);
     });
   }
 
   void _toggleTheme() {
+    final nextTheme =
+        _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
     setState(() {
-      _themeMode =
-          _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+      _themeMode = nextTheme;
     });
+    LocalPreferences.write(
+      _themePreferenceKey,
+      nextTheme == ThemeMode.light ? 'light' : 'dark',
+    );
   }
 
   void _changeLanguage(AppLanguage language) {
     setState(() {
       _language = language;
     });
+    LocalPreferences.write(_languagePreferenceKey, language.name);
   }
 
   @override

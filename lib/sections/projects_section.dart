@@ -60,6 +60,17 @@ class _ProjectCardState extends State<_ProjectCard> {
     }
   }
 
+  void _showDetails() {
+    showDialog<void>(
+      context: context,
+      builder: (context) => _ProjectDetailsDialog(
+        project: widget.project,
+        strings: widget.strings,
+        onOpen: _open,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -160,6 +171,11 @@ class _ProjectCardState extends State<_ProjectCard> {
                     spacing: 10,
                     runSpacing: 10,
                     children: [
+                      FilledButton.icon(
+                        onPressed: _showDetails,
+                        icon: const Icon(Icons.article_outlined),
+                        label: Text(widget.strings.viewDetails),
+                      ),
                       FilledButton.tonalIcon(
                         onPressed: () => _open(project.googlePlayUrl),
                         icon: const Icon(Icons.android),
@@ -209,11 +225,197 @@ class _ProjectImage extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 16 / 10,
       child: Container(
-        color: theme.colorScheme.surfaceContainerHighest,
-        child: Image.asset(
-          path,
-          fit: BoxFit.contain,
-          alignment: Alignment.topCenter,
+        padding: const EdgeInsets.symmetric(horizontal: 38, vertical: 18),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surfaceContainerHighest,
+        ),
+        child: Center(
+          child: AspectRatio(
+            aspectRatio: 9 / 16,
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.inverseSurface,
+                borderRadius: BorderRadius.circular(28),
+                boxShadow: [
+                  BoxShadow(
+                    color: theme.colorScheme.shadow.withValues(alpha: 0.22),
+                    blurRadius: 24,
+                    offset: const Offset(0, 14),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(22),
+                child: Container(
+                  color: theme.colorScheme.surface,
+                  child: Image.asset(
+                    path,
+                    fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ProjectDetailsDialog extends StatelessWidget {
+  final LocalizedProject project;
+  final AppStrings strings;
+  final Future<void> Function(String url) onOpen;
+
+  const _ProjectDetailsDialog({
+    required this.project,
+    required this.strings,
+    required this.onOpen,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Dialog(
+      insetPadding: const EdgeInsets.all(20),
+      clipBehavior: Clip.antiAlias,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 920),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _ProjectImage(path: project.imageUrl),
+              Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                strings.projectDetails,
+                                style: theme.textTheme.labelLarge?.copyWith(
+                                  color: theme.colorScheme.primary,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                project.title,
+                                style: theme.textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          tooltip: strings.close,
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: const Icon(Icons.close),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 18),
+                    _DialogSectionTitle(strings.overview),
+                    Text(
+                      project.description,
+                      style: theme.textTheme.bodyLarge?.copyWith(height: 1.55),
+                    ),
+                    const SizedBox(height: 18),
+                    _DialogSectionTitle(strings.techStackLabel),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: project.techStack
+                          .split(',')
+                          .map((tech) => _Tag(tech.trim()))
+                          .toList(),
+                    ),
+                    const SizedBox(height: 18),
+                    _DialogSectionTitle(strings.highlights),
+                    ...project.highlights.map(
+                      (highlight) => Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Icon(
+                              Icons.check_circle_outline,
+                              size: 19,
+                              color: theme.colorScheme.primary,
+                            ),
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                highlight,
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  height: 1.5,
+                                  color: theme.colorScheme.onSurfaceVariant,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
+                      children: [
+                        FilledButton.tonalIcon(
+                          onPressed: () => onOpen(project.googlePlayUrl),
+                          icon: const Icon(Icons.android),
+                          label: Text(strings.googlePlay),
+                        ),
+                        OutlinedButton.icon(
+                          onPressed: () => onOpen(project.appStoreUrl),
+                          icon: const Icon(Icons.apple),
+                          label: Text(strings.appStore),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: Text(strings.close),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DialogSectionTitle extends StatelessWidget {
+  final String text;
+
+  const _DialogSectionTitle(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Text(
+        text,
+        style: theme.textTheme.titleSmall?.copyWith(
+          fontWeight: FontWeight.w800,
         ),
       ),
     );
