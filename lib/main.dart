@@ -156,12 +156,39 @@ class PortfolioPage extends StatefulWidget {
 
 class _PortfolioPageState extends State<PortfolioPage> {
   final ScrollController _scrollController = ScrollController();
+  double _scrollProgress = 0;
 
   final _homeKey = GlobalKey();
   final _aboutKey = GlobalKey();
   final _skillsKey = GlobalKey();
   final _projectsKey = GlobalKey();
   final _contactKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_updateScrollProgress);
+  }
+
+  @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_updateScrollProgress)
+      ..dispose();
+    super.dispose();
+  }
+
+  void _updateScrollProgress() {
+    if (!_scrollController.hasClients) return;
+    final position = _scrollController.position;
+    final maxScroll = position.maxScrollExtent;
+    final nextProgress =
+        maxScroll <= 0 ? 0.0 : (position.pixels / maxScroll).clamp(0.0, 1.0);
+    if ((nextProgress - _scrollProgress).abs() < 0.002) return;
+    setState(() {
+      _scrollProgress = nextProgress;
+    });
+  }
 
   Future<void> _scrollTo(GlobalKey key) async {
     final ctx = key.currentContext;
@@ -395,29 +422,79 @@ class _PortfolioPageState extends State<PortfolioPage> {
             ],
           ),
           drawer: isSmall ? _buildMobileDrawer() : null,
-          body: SingleChildScrollView(
-            controller: _scrollController,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                    key: _homeKey,
-                    child: HeroSection(
-                        strings: t,
-                        onContactTap: () => _scrollTo(_contactKey),
-                        onProjectsTap: () => _scrollTo(_projectsKey))),
-                Container(key: _aboutKey, child: AboutSection(strings: t)),
-                Container(key: _skillsKey, child: SkillsSection(strings: t)),
-                Container(
-                    key: _projectsKey, child: ProjectsSection(strings: t)),
-                Container(key: _contactKey, child: ContactSection(strings: t)),
-                const SizedBox(height: 24),
-                _Footer(strings: t),
-              ],
-            ),
+          body: Stack(
+            children: [
+              SingleChildScrollView(
+                controller: _scrollController,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                        key: _homeKey,
+                        child: HeroSection(
+                            strings: t,
+                            onContactTap: () => _scrollTo(_contactKey),
+                            onProjectsTap: () => _scrollTo(_projectsKey))),
+                    Container(key: _aboutKey, child: AboutSection(strings: t)),
+                    Container(
+                        key: _skillsKey, child: SkillsSection(strings: t)),
+                    Container(
+                        key: _projectsKey, child: ProjectsSection(strings: t)),
+                    Container(
+                        key: _contactKey, child: ContactSection(strings: t)),
+                    const SizedBox(height: 24),
+                    _Footer(strings: t),
+                  ],
+                ),
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: _ScrollProgressBar(progress: _scrollProgress),
+              ),
+            ],
           ),
         );
       },
+    );
+  }
+}
+
+class _ScrollProgressBar extends StatelessWidget {
+  final double progress;
+
+  const _ScrollProgressBar({required this.progress});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return SizedBox(
+      height: 3,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: ColoredBox(
+              color: theme.colorScheme.surfaceContainerHighest
+                  .withValues(alpha: 0.22),
+            ),
+          ),
+          FractionallySizedBox(
+            widthFactor: progress,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    theme.colorScheme.primary,
+                    theme.colorScheme.secondary,
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

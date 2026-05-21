@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'section_container.dart';
 import 'package:my_porfolio_web/l10n/app_strings.dart';
@@ -116,6 +117,10 @@ class HeroSection extends StatelessWidget {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 16),
+                  const _TerminalStatusStrip(),
+                  const SizedBox(height: 14),
+                  const _TechIconRail(),
 
                   const SizedBox(height: 20),
 
@@ -541,4 +546,224 @@ class _HeroStat extends StatelessWidget {
       ),
     );
   }
+}
+
+class _TerminalStatusStrip extends StatefulWidget {
+  const _TerminalStatusStrip();
+
+  @override
+  State<_TerminalStatusStrip> createState() => _TerminalStatusStripState();
+}
+
+class _TerminalStatusStripState extends State<_TerminalStatusStrip>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  static const _lines = [
+    '> stack: Flutter + Laravel + Firebase',
+    '> mobile: Android + iOS + Web',
+    '> status: available_for_projects',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 8),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 560),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surface.withValues(alpha: 0.72),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: theme.colorScheme.primary.withValues(alpha: 0.24),
+          ),
+        ),
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            final activeLine =
+                (_controller.value * _lines.length).floor() % _lines.length;
+            final cursorVisible = (_controller.value * 16).floor().isEven;
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                for (var i = 0; i < _lines.length; i++)
+                  Padding(
+                    padding: EdgeInsets.only(top: i == 0 ? 0 : 4),
+                    child: Text(
+                      i == activeLine && cursorVisible
+                          ? '${_lines[i]} _'
+                          : _lines[i],
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: i == activeLine
+                            ? theme.colorScheme.primary
+                            : theme.colorScheme.onSurfaceVariant,
+                        fontFamily: 'monospace',
+                        fontWeight:
+                            i == activeLine ? FontWeight.w700 : FontWeight.w500,
+                        height: 1.35,
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _TechIconRail extends StatefulWidget {
+  const _TechIconRail();
+
+  @override
+  State<_TechIconRail> createState() => _TechIconRailState();
+}
+
+class _TechIconRailState extends State<_TechIconRail>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  static const _items = [
+    _TechIconItem('Flutter', FontAwesomeIcons.flutter),
+    _TechIconItem('Dart', FontAwesomeIcons.dartLang),
+    _TechIconItem('React Native', FontAwesomeIcons.react),
+    _TechIconItem('Kotlin', FontAwesomeIcons.android),
+    _TechIconItem('Swift', FontAwesomeIcons.swift),
+    _TechIconItem('Laravel', FontAwesomeIcons.laravel),
+    _TechIconItem('Firebase', FontAwesomeIcons.fire),
+    _TechIconItem('MySQL', FontAwesomeIcons.database),
+    _TechIconItem('Git', FontAwesomeIcons.gitAlt),
+    _TechIconItem('Figma', FontAwesomeIcons.figma),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 6),
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final reduceMotion = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final theme = Theme.of(context);
+
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 650),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        decoration: BoxDecoration(
+          color: theme.colorScheme.surface.withValues(alpha: 0.64),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: theme.colorScheme.outlineVariant.withValues(alpha: 0.74),
+          ),
+        ),
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            final pulse = reduceMotion
+                ? 0.0
+                : Curves.easeInOut.transform(_controller.value);
+
+            return Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                for (var i = 0; i < _items.length; i++)
+                  _TechIconButton(
+                    item: _items[i],
+                    active:
+                        ((pulse * _items.length).floor() % _items.length) == i,
+                  ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class _TechIconButton extends StatelessWidget {
+  final _TechIconItem item;
+  final bool active;
+
+  const _TechIconButton({required this.item, required this.active});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Tooltip(
+      message: item.label,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 220),
+        width: 42,
+        height: 42,
+        decoration: BoxDecoration(
+          color: active
+              ? theme.colorScheme.primaryContainer
+              : theme.colorScheme.surface,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: active
+                ? theme.colorScheme.primary.withValues(alpha: 0.72)
+                : theme.colorScheme.outlineVariant,
+          ),
+          boxShadow: [
+            if (active)
+              BoxShadow(
+                color: theme.colorScheme.primary.withValues(alpha: 0.18),
+                blurRadius: 16,
+                offset: const Offset(0, 8),
+              ),
+          ],
+        ),
+        alignment: Alignment.center,
+        child: FaIcon(
+          item.icon,
+          size: 20,
+          color: active
+              ? theme.colorScheme.primary
+              : theme.colorScheme.onSurfaceVariant,
+        ),
+      ),
+    );
+  }
+}
+
+class _TechIconItem {
+  final String label;
+  final IconData icon;
+
+  const _TechIconItem(this.label, this.icon);
 }

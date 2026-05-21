@@ -141,6 +141,8 @@ class _ProjectCardState extends State<_ProjectCard> {
                     ),
                   ),
                   const SizedBox(height: 14),
+                  _BuildLogPanel(strings: widget.strings, compact: true),
+                  const SizedBox(height: 14),
                   ...project.highlights.map(
                     (highlight) => Padding(
                       padding: const EdgeInsets.only(bottom: 8),
@@ -343,6 +345,9 @@ class _ProjectDetailsDialog extends StatelessWidget {
                           .toList(),
                     ),
                     const SizedBox(height: 18),
+                    _DialogSectionTitle(strings.buildLog),
+                    _BuildLogPanel(strings: strings),
+                    const SizedBox(height: 18),
                     _DialogSectionTitle(strings.highlights),
                     ...project.highlights.map(
                       (highlight) => Padding(
@@ -417,6 +422,108 @@ class _DialogSectionTitle extends StatelessWidget {
         style: theme.textTheme.titleSmall?.copyWith(
           fontWeight: FontWeight.w800,
         ),
+      ),
+    );
+  }
+}
+
+class _BuildLogPanel extends StatefulWidget {
+  final AppStrings strings;
+  final bool compact;
+
+  const _BuildLogPanel({required this.strings, this.compact = false});
+
+  @override
+  State<_BuildLogPanel> createState() => _BuildLogPanelState();
+}
+
+class _BuildLogPanelState extends State<_BuildLogPanel>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 5),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final reduceMotion = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    final items = widget.strings.buildLogItems;
+
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(widget.compact ? 12 : 14),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: theme.colorScheme.outlineVariant),
+      ),
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          final active = reduceMotion || items.isEmpty
+              ? -1
+              : (_controller.value * items.length).floor() % items.length;
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.strings.buildLog,
+                style: theme.textTheme.labelLarge?.copyWith(
+                  color: theme.colorScheme.primary,
+                  fontFamily: 'monospace',
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 8),
+              for (var i = 0; i < items.length; i++)
+                Padding(
+                  padding: EdgeInsets.only(top: i == 0 ? 0 : 5),
+                  child: Row(
+                    children: [
+                      Icon(
+                        i == active
+                            ? Icons.sync_outlined
+                            : Icons.check_circle_outline,
+                        size: 16,
+                        color: i == active
+                            ? theme.colorScheme.primary
+                            : theme.colorScheme.tertiary,
+                      ),
+                      const SizedBox(width: 7),
+                      Expanded(
+                        child: Text(
+                          i == active ? '${items[i]} ...' : items[i],
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: i == active
+                                ? theme.colorScheme.primary
+                                : theme.colorScheme.onSurfaceVariant,
+                            fontFamily: 'monospace',
+                            fontWeight:
+                                i == active ? FontWeight.w800 : FontWeight.w500,
+                            height: 1.35,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          );
+        },
       ),
     );
   }

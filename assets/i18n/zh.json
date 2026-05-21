@@ -35,6 +35,8 @@
   "projectDetails": "项目详情",
   "overview": "概览",
   "highlights": "亮点",
+  "buildLog": "构建日志",
+  "buildLogItems": ["身份验证已集成", "REST API 已连接", "应用商店发布就绪"],
   "techStackLabel": "技术栈",
   "viewDetails": "查看详情",
   "close": "关闭",

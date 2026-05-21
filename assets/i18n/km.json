@@ -35,6 +35,8 @@
   "projectDetails": "ព័ត៌មានលម្អិតគម្រោង",
   "overview": "សេចក្តីសង្ខេប",
   "highlights": "ចំណុចសំខាន់ៗ",
+  "buildLog": "Build Log",
+  "buildLogItems": ["ភ្ជាប់ Auth រួចរាល់", "ភ្ជាប់ REST API រួចរាល់", "រួចរាល់សម្រាប់ចេញផ្សាយលើ Store"],
   "techStackLabel": "បច្ចេកវិទ្យាដែលប្រើ",
   "viewDetails": "មើលលម្អិត",
   "close": "បិទ",

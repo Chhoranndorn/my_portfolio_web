@@ -73,6 +73,8 @@ class AppStrings {
   String get projectDetails => _text('projectDetails');
   String get overview => _text('overview');
   String get highlights => _text('highlights');
+  String get buildLog => _text('buildLog');
+  List<String> get buildLogItems => _stringList(_data['buildLogItems']);
   String get techStackLabel => _text('techStackLabel');
   String get viewDetails => _text('viewDetails');
   String get close => _text('close');

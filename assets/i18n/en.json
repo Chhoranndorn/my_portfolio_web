@@ -35,6 +35,8 @@
   "projectDetails": "Project Details",
   "overview": "Overview",
   "highlights": "Highlights",
+  "buildLog": "Build Log",
+  "buildLogItems": ["Auth integrated", "REST APIs connected", "Store release ready"],
   "techStackLabel": "Tech Stack",
   "viewDetails": "View Details",
   "close": "Close",
