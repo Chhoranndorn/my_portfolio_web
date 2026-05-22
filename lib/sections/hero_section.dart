@@ -66,8 +66,13 @@ class HeroSection extends StatelessWidget {
                 color: theme.colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.w500,
               );
+              final introAlignment = isNarrow
+                  ? CrossAxisAlignment.center
+                  : CrossAxisAlignment.start;
+              final heroTextAlign =
+                  isNarrow ? TextAlign.center : TextAlign.start;
               final intro = Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: introAlignment,
                 children: [
                   Container(
                     padding:
@@ -90,124 +95,43 @@ class HeroSection extends StatelessWidget {
                   ),
                   const SizedBox(height: 18),
                   // Name
-                  Text('BO CHHORANNDORN', style: nameStyle),
+                  Text(
+                    'BO CHHORANNDORN',
+                    style: nameStyle,
+                    textAlign: heroTextAlign,
+                  ),
                   const SizedBox(height: 8),
                   // Role
                   // Text('Mobile Application Developer', style: titleStyle),
-                  Text(strings.role, style: titleStyle),
+                  Text(
+                    strings.role,
+                    style: titleStyle,
+                    textAlign: heroTextAlign,
+                  ),
 
                   const SizedBox(height: 14),
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 660),
                     child: Text(
                       strings.heroIntro,
+                      textAlign: heroTextAlign,
                       style: theme.textTheme.bodyLarge?.copyWith(
                         color: theme.colorScheme.onSurfaceVariant,
                         height: 1.55,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  const _TerminalStatusStrip(),
-                  const SizedBox(height: 14),
-                  const _TechIconRail(),
-
-                  const SizedBox(height: 20),
-
-                  // Contact Info - each on a new line
-// Contact Info - each on a new line with bold labels
-//                   Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       RichText(
-//                         text: TextSpan(
-//                           style: contactStyle,
-//                           children: [
-//                             TextSpan(
-//                               text: strings.addressLabel,
-//                               style: contactLabelStyle,
-//                             ),
-//                             TextSpan(text: strings.address),
-//                           ],
-//                         ),
-//                       ),
-//                       SizedBox(height: 4),
-//                       RichText(
-//                         text: TextSpan(
-//                           style: contactStyle,
-//                           children: [
-//                             TextSpan(
-//                               text: strings.phoneLabel,
-//                               style: contactLabelStyle,
-//                             ),
-//                             TextSpan(text: '+855 17 824 303 (Telegram)'),
-//                           ],
-//                         ),
-//                       ),
-//                       SizedBox(height: 4),
-//                       RichText(
-//                         text: TextSpan(
-//                           style: contactStyle,
-//                           children: [
-//                             TextSpan(
-//                               text: strings.emailLabel,
-//                               style: contactLabelStyle,
-//                             ),
-//                             TextSpan(text: 'ranndorn99@gmail.com'),
-//                           ],
-//                         ),
-//                       ),
-//                       SizedBox(height: 4),
-//                       // LinkedIn
-//                       InkWell(
-//                         onTap: () async {
-//                           await openUrl(
-//                               'https://www.linkedin.com/in/bo-chhoranndorn-32402b35a/');
-//                         },
-//                         child: RichText(
-//                           text: TextSpan(
-//                             style: linkStyle,
-//                             children: [
-//                               TextSpan(
-//                                 text: 'LinkedIn: ',
-//                                 style: contactLabelStyle,
-//                               ),
-//                               TextSpan(
-//                                 text:
-//                                     'linkedin.com/in/bo-chhoranndorn-32402b35a/',
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ),
-
-//                       const SizedBox(height: 4),
-
-// // GitHub
-//                       InkWell(
-//                         onTap: () async {
-//                           await openUrl('https://github.com/Chhoranndorn');
-//                         },
-//                         child: RichText(
-//                           text: TextSpan(
-//                             style: linkStyle,
-//                             children: [
-//                               TextSpan(
-//                                 text: 'GitHub: ',
-//                                 style: contactLabelStyle,
-//                               ),
-//                               TextSpan(
-//                                 text: 'github.com/Chhoranndorn',
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
+                  if (!isNarrow) ...[
+                    const SizedBox(height: 16),
+                    const _TerminalStatusStrip(),
+                    const SizedBox(height: 14),
+                    const _TechIconRail(),
+                  ],
 
                   const SizedBox(height: 24), // Buttons
                   Wrap(
+                    alignment:
+                        isNarrow ? WrapAlignment.center : WrapAlignment.start,
                     spacing: 12,
                     runSpacing: 12,
                     children: [
@@ -221,29 +145,34 @@ class HeroSection extends StatelessWidget {
                         icon: const Icon(Icons.mail_outline),
                         label: Text(strings.contactMe),
                       ),
-                      FilledButton.tonalIcon(
-                        onPressed: () => openUrl('BO_CHHORANNDORN_CV.pdf'),
-                        icon: const Icon(Icons.download_outlined),
-                        label: Text(strings.downloadCv),
-                      ),
-                      TextButton.icon(
-                        onPressed: () =>
-                            openUrl('https://github.com/Chhoranndorn'),
-                        icon: const Icon(Icons.open_in_new),
-                        label: const Text('GitHub'),
-                      ),
+                      if (!isNarrow) ...[
+                        FilledButton.tonalIcon(
+                          onPressed: () => openUrl('BO_CHHORANNDORN_CV.pdf'),
+                          icon: const Icon(Icons.download_outlined),
+                          label: Text(strings.downloadCv),
+                        ),
+                        TextButton.icon(
+                          onPressed: () =>
+                              openUrl('https://github.com/Chhoranndorn'),
+                          icon: const Icon(Icons.open_in_new),
+                          label: const Text('GitHub'),
+                        ),
+                      ],
                     ],
                   ),
-                  const SizedBox(height: 28),
-                  Wrap(
-                    spacing: 12,
-                    runSpacing: 12,
-                    children: [
-                      _HeroStat(value: '20+', label: strings.statApps),
-                      _HeroStat(value: '10+', label: strings.statStores),
-                      _HeroStat(value: 'REST', label: strings.statApi),
-                    ],
-                  ),
+                  if (!isNarrow) ...[
+                    const SizedBox(height: 28),
+                    Wrap(
+                      alignment: WrapAlignment.start,
+                      spacing: 12,
+                      runSpacing: 12,
+                      children: [
+                        _HeroStat(value: '20+', label: strings.statApps),
+                        _HeroStat(value: '10+', label: strings.statStores),
+                        _HeroStat(value: 'REST', label: strings.statApi),
+                      ],
+                    ),
+                  ],
                 ],
               );
 
@@ -268,18 +197,21 @@ class HeroSection extends StatelessWidget {
 
               if (isNarrow) {
                 return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Reveal(
-                        delay: const Duration(milliseconds: 100),
-                        offset: const Offset(0, 32),
-                        child: intro),
-                    const SizedBox(height: 24),
                     Center(
-                        child: Reveal(
-                            delay: const Duration(milliseconds: 200),
-                            offset: const Offset(0, 24),
-                            child: avatar)),
+                      child: Reveal(
+                        delay: const Duration(milliseconds: 80),
+                        offset: const Offset(0, 20),
+                        child: avatar,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Reveal(
+                      delay: const Duration(milliseconds: 140),
+                      offset: const Offset(0, 28),
+                      child: intro,
+                    ),
                   ],
                 );
               }

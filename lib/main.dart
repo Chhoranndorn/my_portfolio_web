@@ -157,6 +157,7 @@ class PortfolioPage extends StatefulWidget {
 class _PortfolioPageState extends State<PortfolioPage> {
   final ScrollController _scrollController = ScrollController();
   double _scrollProgress = 0;
+  bool _drawerWarmupScheduled = false;
 
   final _homeKey = GlobalKey();
   final _aboutKey = GlobalKey();
@@ -168,6 +169,17 @@ class _PortfolioPageState extends State<PortfolioPage> {
   void initState() {
     super.initState();
     _scrollController.addListener(_updateScrollProgress);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_drawerWarmupScheduled) return;
+    _drawerWarmupScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _warmUpDrawerResources();
+    });
   }
 
   @override
@@ -202,6 +214,50 @@ class _PortfolioPageState extends State<PortfolioPage> {
   }
 
   AppStrings get strings => widget.strings;
+
+  void _warmUpDrawerResources() {
+    final imageProviders = <ImageProvider>[
+      const ResizeImage(
+        AssetImage(Images.profile),
+        width: 112,
+        height: 112,
+      ),
+      for (final language in AppLanguage.values)
+        ResizeImage(
+          AssetImage(language.flagAsset),
+          width: 64,
+          height: 64,
+        ),
+    ];
+
+    for (final provider in imageProviders) {
+      precacheImage(provider, context);
+    }
+
+    final textStyle = Theme.of(context).textTheme.bodyMedium;
+    final labels = [
+      strings.navigation,
+      strings.navHome,
+      strings.navAbout,
+      strings.navSkills,
+      strings.navProjects,
+      strings.navContact,
+      strings.languageLabel,
+      for (final language in AppLanguage.values) language.label,
+      strings.lightMode,
+      strings.darkMode,
+      strings.changeAppearance,
+    ];
+
+    for (final label in labels) {
+      final painter = TextPainter(
+        text: TextSpan(text: label, style: textStyle),
+        textDirection: TextDirection.ltr,
+        maxLines: 2,
+      )..layout(maxWidth: 260);
+      painter.dispose();
+    }
+  }
 
   List<Widget> _buildActions(bool isSmall) {
     final t = strings;
@@ -274,7 +330,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
                     CircleAvatar(
                       radius: 28,
                       backgroundColor: theme.colorScheme.primary,
-                      foregroundImage: const AssetImage(Images.profile),
+                      foregroundImage: const ResizeImage(
+                        AssetImage(Images.profile),
+                        width: 112,
+                        height: 112,
+                      ),
                     ),
                     const SizedBox(width: 14),
                     Expanded(
