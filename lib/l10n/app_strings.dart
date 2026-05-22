@@ -82,6 +82,13 @@ class AppStrings {
   String get appStore => _text('appStore');
   String get contactTitle => _text('contactTitle');
   String get contactSubtitle => _text('contactSubtitle');
+  String get contactFormTitle => _text('contactFormTitle');
+  String get contactNameLabel => _text('contactNameLabel');
+  String get contactEmailLabel => _text('contactEmailLabel');
+  String get contactMessageLabel => _text('contactMessageLabel');
+  String get contactSendMessage => _text('contactSendMessage');
+  String get contactRequired => _text('contactRequired');
+  String get contactDirectTitle => _text('contactDirectTitle');
   String get copyEmail => _text('copyEmail');
   String get copied => _text('copied');
   String get location => _text('location');
