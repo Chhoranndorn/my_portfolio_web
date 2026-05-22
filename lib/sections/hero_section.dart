@@ -148,6 +148,13 @@ class HeroSection extends StatelessWidget {
                       if (!isNarrow) ...[
                         FilledButton.tonalIcon(
                           onPressed: () => openUrl('BO_CHHORANNDORN_CV.pdf'),
+                          style: FilledButton.styleFrom(
+                            side: BorderSide(
+                              color: theme.colorScheme.primary.withValues(
+                                alpha: 0.42,
+                              ),
+                            ),
+                          ),
                           icon: const Icon(Icons.download_outlined),
                           label: Text(strings.downloadCv),
                         ),

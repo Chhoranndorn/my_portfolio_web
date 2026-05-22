@@ -65,17 +65,25 @@ class AboutSection extends StatelessWidget {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(
-                            Icons.arrow_right,
-                            color: theme.colorScheme.primary,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: Container(
+                              width: 7,
+                              height: 7,
+                              decoration: BoxDecoration(
+                                color: theme.colorScheme.primary,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
                           ),
-                          const SizedBox(width: 6),
+                          const SizedBox(width: 12),
                           Expanded(
                             child: Text(
                               r,
                               style: theme.textTheme.bodyLarge?.copyWith(
                                 color: theme.colorScheme.onSurfaceVariant,
                                 height: 1.45,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),

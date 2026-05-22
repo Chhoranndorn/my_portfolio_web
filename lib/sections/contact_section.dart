@@ -61,24 +61,22 @@ class _ContactSectionState extends State<ContactSection> {
     final name = _nameController.text.trim();
     final email = _emailController.text.trim();
     final message = _messageController.text.trim();
-    final uri = Uri.https(
+    final subject = 'Portfolio project inquiry from $name';
+    final body = 'Name: $name\nEmail: $email\n\n$message';
+    final gmailUri = Uri.https(
       'mail.google.com',
       '/mail/',
       {
         'view': 'cm',
         'fs': '1',
         'to': 'ranndorn99@gmail.com',
-        'su': 'Portfolio project inquiry from $name',
-        'body': 'Name: $name\nEmail: $email\n\n$message',
+        'su': subject,
+        'body': body,
       },
     );
-
     _clearContactForm();
-    await launchUrl(
-      uri,
-      mode: LaunchMode.platformDefault,
-      webOnlyWindowName: '_blank',
-    );
+    await launchUrl(gmailUri,
+        mode: LaunchMode.platformDefault, webOnlyWindowName: '_blank');
   }
 
   String? _requiredValidator(String? value) {

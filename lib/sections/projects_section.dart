@@ -391,10 +391,6 @@ class _ProjectDetailsDialog extends StatelessWidget {
                           icon: const Icon(Icons.apple),
                           label: Text(strings.appStore),
                         ),
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: Text(strings.close),
-                        ),
                       ],
                     ),
                   ],
