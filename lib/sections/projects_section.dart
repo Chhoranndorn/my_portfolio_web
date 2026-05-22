@@ -255,6 +255,8 @@ class _ProjectImage extends StatelessWidget {
                     path,
                     fit: BoxFit.cover,
                     alignment: Alignment.topCenter,
+                    cacheWidth: 420,
+                    filterQuality: FilterQuality.medium,
                   ),
                 ),
               ),

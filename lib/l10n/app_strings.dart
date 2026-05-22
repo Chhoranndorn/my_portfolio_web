@@ -5,8 +5,8 @@ import 'package:my_porfolio_web/util/images.dart';
 
 enum AppLanguage {
   en('English', 'EN', Images.usflage, 'assets/i18n/en.json'),
-  km('ភាសាខ្មែរ', 'ខ្មែរ', Images.khflage, 'assets/i18n/km.json'),
-  zh('中文', '中文', Images.cnflage, 'assets/i18n/zh.json');
+  km('ភាសាខ្មែរ', 'KM', Images.khflage, 'assets/i18n/km.json'),
+  zh('中文', 'ZH', Images.cnflage, 'assets/i18n/zh.json');
 
   final String label;
   final String shortLabel;

@@ -599,6 +599,8 @@ class _FlagBadge extends StatelessWidget {
         width: size + 6,
         height: size,
         fit: BoxFit.cover,
+        cacheWidth: 64,
+        filterQuality: FilterQuality.medium,
       ),
     );
   }

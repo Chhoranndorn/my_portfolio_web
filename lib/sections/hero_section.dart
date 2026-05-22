@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,7 +37,9 @@ class HeroSection extends StatelessWidget {
 
     return Stack(
       children: [
-        const Positioned.fill(child: _UniverseBackground()),
+        const Positioned.fill(
+          child: RepaintBoundary(child: _UniverseBackground()),
+        ),
         Positioned.fill(
           child: DecoratedBox(
             decoration: BoxDecoration(
@@ -62,19 +65,6 @@ class HeroSection extends StatelessWidget {
               final titleStyle = theme.textTheme.titleLarge?.copyWith(
                 color: theme.colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.w500,
-              );
-              final contactStyle = theme.textTheme.bodyLarge?.copyWith(
-                    color: theme.colorScheme.onSurface,
-                  ) ??
-                  TextStyle(
-                    fontSize: 16,
-                    color: theme.colorScheme.onSurface,
-                  );
-              final contactLabelStyle = contactStyle.copyWith(
-                fontWeight: FontWeight.bold,
-              );
-              final linkStyle = contactStyle.copyWith(
-                color: theme.colorScheme.primary,
               );
               final intro = Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,95 +116,95 @@ class HeroSection extends StatelessWidget {
 
                   // Contact Info - each on a new line
 // Contact Info - each on a new line with bold labels
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          style: contactStyle,
-                          children: [
-                            TextSpan(
-                              text: strings.addressLabel,
-                              style: contactLabelStyle,
-                            ),
-                            TextSpan(text: strings.address),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      RichText(
-                        text: TextSpan(
-                          style: contactStyle,
-                          children: [
-                            TextSpan(
-                              text: strings.phoneLabel,
-                              style: contactLabelStyle,
-                            ),
-                            TextSpan(text: '+855 17 824 303 (Telegram)'),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      RichText(
-                        text: TextSpan(
-                          style: contactStyle,
-                          children: [
-                            TextSpan(
-                              text: strings.emailLabel,
-                              style: contactLabelStyle,
-                            ),
-                            TextSpan(text: 'ranndorn99@gmail.com'),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      // LinkedIn
-                      InkWell(
-                        onTap: () async {
-                          await openUrl(
-                              'https://www.linkedin.com/in/bo-chhoranndorn-32402b35a/');
-                        },
-                        child: RichText(
-                          text: TextSpan(
-                            style: linkStyle,
-                            children: [
-                              TextSpan(
-                                text: 'LinkedIn: ',
-                                style: contactLabelStyle,
-                              ),
-                              TextSpan(
-                                text:
-                                    'linkedin.com/in/bo-chhoranndorn-32402b35a/',
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+//                   Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: [
+//                       RichText(
+//                         text: TextSpan(
+//                           style: contactStyle,
+//                           children: [
+//                             TextSpan(
+//                               text: strings.addressLabel,
+//                               style: contactLabelStyle,
+//                             ),
+//                             TextSpan(text: strings.address),
+//                           ],
+//                         ),
+//                       ),
+//                       SizedBox(height: 4),
+//                       RichText(
+//                         text: TextSpan(
+//                           style: contactStyle,
+//                           children: [
+//                             TextSpan(
+//                               text: strings.phoneLabel,
+//                               style: contactLabelStyle,
+//                             ),
+//                             TextSpan(text: '+855 17 824 303 (Telegram)'),
+//                           ],
+//                         ),
+//                       ),
+//                       SizedBox(height: 4),
+//                       RichText(
+//                         text: TextSpan(
+//                           style: contactStyle,
+//                           children: [
+//                             TextSpan(
+//                               text: strings.emailLabel,
+//                               style: contactLabelStyle,
+//                             ),
+//                             TextSpan(text: 'ranndorn99@gmail.com'),
+//                           ],
+//                         ),
+//                       ),
+//                       SizedBox(height: 4),
+//                       // LinkedIn
+//                       InkWell(
+//                         onTap: () async {
+//                           await openUrl(
+//                               'https://www.linkedin.com/in/bo-chhoranndorn-32402b35a/');
+//                         },
+//                         child: RichText(
+//                           text: TextSpan(
+//                             style: linkStyle,
+//                             children: [
+//                               TextSpan(
+//                                 text: 'LinkedIn: ',
+//                                 style: contactLabelStyle,
+//                               ),
+//                               TextSpan(
+//                                 text:
+//                                     'linkedin.com/in/bo-chhoranndorn-32402b35a/',
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                       ),
 
-                      const SizedBox(height: 4),
+//                       const SizedBox(height: 4),
 
-// GitHub
-                      InkWell(
-                        onTap: () async {
-                          await openUrl('https://github.com/Chhoranndorn');
-                        },
-                        child: RichText(
-                          text: TextSpan(
-                            style: linkStyle,
-                            children: [
-                              TextSpan(
-                                text: 'GitHub: ',
-                                style: contactLabelStyle,
-                              ),
-                              TextSpan(
-                                text: 'github.com/Chhoranndorn',
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+// // GitHub
+//                       InkWell(
+//                         onTap: () async {
+//                           await openUrl('https://github.com/Chhoranndorn');
+//                         },
+//                         child: RichText(
+//                           text: TextSpan(
+//                             style: linkStyle,
+//                             children: [
+//                               TextSpan(
+//                                 text: 'GitHub: ',
+//                                 style: contactLabelStyle,
+//                               ),
+//                               TextSpan(
+//                                 text: 'github.com/Chhoranndorn',
+//                               ),
+//                             ],
+//                           ),
+//                         ),
+//                       ),
+//                     ],
+//                   ),
 
                   const SizedBox(height: 24), // Buttons
                   Wrap(
@@ -261,7 +251,11 @@ class HeroSection extends StatelessWidget {
                 radius: isNarrow ? 64 : 96,
                 backgroundColor: theme.colorScheme.primary,
                 // Use app asset from Images helper; falls back to initials.
-                foregroundImage: const AssetImage(Images.profile),
+                foregroundImage: const ResizeImage(
+                  AssetImage(Images.profile),
+                  width: 384,
+                  height: 384,
+                ),
                 child: Text(
                   'YN',
                   style: TextStyle(
@@ -321,22 +315,20 @@ class _UniverseBackground extends StatefulWidget {
   State<_UniverseBackground> createState() => _UniverseBackgroundState();
 }
 
-class _UniverseBackgroundState extends State<_UniverseBackground>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
+class _UniverseBackgroundState extends State<_UniverseBackground> {
+  static const _frameInterval = Duration(milliseconds: 83);
+
+  Timer? _timer;
   late final List<_Star> _stars;
   Offset _cursor = const Offset(0.5, 0.5);
+  double _progress = 0;
+  DateTime _lastCursorUpdate = DateTime.fromMillisecondsSinceEpoch(0);
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 18),
-    )..repeat();
-
     final random = math.Random(14);
-    _stars = List.generate(90, (index) {
+    _stars = List.generate(58, (index) {
       return _Star(
         x: random.nextDouble(),
         y: random.nextDouble(),
@@ -345,21 +337,34 @@ class _UniverseBackgroundState extends State<_UniverseBackground>
         phase: random.nextDouble() * math.pi * 2,
       );
     });
+    _timer = Timer.periodic(_frameInterval, (_) {
+      if (!mounted) return;
+      setState(() {
+        _progress = (_progress + _frameInterval.inMilliseconds / 18000) % 1;
+      });
+    });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
   void _updateCursor(PointerEvent event, Size size) {
     if (size.width <= 0 || size.height <= 0) return;
+    final now = DateTime.now();
+    if (now.difference(_lastCursorUpdate) < const Duration(milliseconds: 40)) {
+      return;
+    }
+    final nextCursor = Offset(
+      (event.localPosition.dx / size.width).clamp(0.0, 1.0),
+      (event.localPosition.dy / size.height).clamp(0.0, 1.0),
+    );
+    if ((nextCursor - _cursor).distance < 0.012) return;
+    _lastCursorUpdate = now;
     setState(() {
-      _cursor = Offset(
-        (event.localPosition.dx / size.width).clamp(0.0, 1.0),
-        (event.localPosition.dy / size.height).clamp(0.0, 1.0),
-      );
+      _cursor = nextCursor;
     });
   }
 
@@ -373,19 +378,19 @@ class _UniverseBackgroundState extends State<_UniverseBackground>
 
         return MouseRegion(
           onHover: (event) => _updateCursor(event, size),
-          onExit: (_) => setState(() => _cursor = const Offset(0.5, 0.5)),
-          child: AnimatedBuilder(
-            animation: _controller,
-            builder: (context, child) {
-              return CustomPaint(
-                painter: _UniversePainter(
-                  stars: _stars,
-                  cursor: _cursor,
-                  progress: reduceMotion ? 0 : _controller.value,
-                  colorScheme: Theme.of(context).colorScheme,
-                ),
-              );
-            },
+          onExit: (_) {
+            if (_cursor == const Offset(0.5, 0.5)) return;
+            setState(() => _cursor = const Offset(0.5, 0.5));
+          },
+          child: CustomPaint(
+            isComplex: true,
+            willChange: !reduceMotion,
+            painter: _UniversePainter(
+              stars: _stars,
+              cursor: _cursor,
+              progress: reduceMotion ? 0 : _progress,
+              colorScheme: Theme.of(context).colorScheme,
+            ),
           ),
         );
       },
@@ -448,7 +453,7 @@ class _UniversePainter extends CustomPainter {
     final linePaint = Paint()
       ..color = colorScheme.primary.withValues(alpha: 0.08)
       ..strokeWidth = 1;
-    for (var i = 0; i < stars.length; i += 9) {
+    for (var i = 0; i < stars.length; i += 12) {
       final a = _starPosition(stars[i], size, drift);
       final b = _starPosition(stars[(i + 5) % stars.length], size, drift);
       if ((a - b).distance < 190) {
